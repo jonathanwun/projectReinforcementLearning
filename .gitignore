@@ -33,5 +33,9 @@ MANIFEST
 # Environments
 .venv
 venv/
+myenv/
+
+.vscode
+flagged/
 
 

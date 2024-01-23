@@ -1,0 +1,13 @@
+category,image_path,prompt,explanation,slider
+1,./images_training/1.jpg,"boy face, realistic, happy","Alignment Problem : This image has a low level of mistake. It can be initially difficult to notice the mistake but when zoomed in it can be seen that the lower teeth structure of the young boy is misaligned and not correctly formed. Overall the image looks realistic, but when looked closely has alignment issues. The level of mistake is 1 out of 5.",
+2,./images_training/2.jpg,"sleeping face, man, realistic",Correct Image : This image is classified as a correct image since it doesnot have any of the other five problems we are looking at in a generated face. The image is according to the prompt we have provided and the facial structure of the man looks realistic.,
+3,./images_training/3.jpg,"realistic face, man",Incorrect Proportion :  This image ,
+4,./images_training/4.jpg,"face of a sleeping boy, realistic",Number of Features : ,
+5,./images_training/5.jpg,"realistic face, male,smiling",Wrong Aspect : ,
+6,./images_training/6.jpg,"face of a girl, short black hair, realistic",Unrealistic : ,
+1,./images_training/7.jpg,"female face, realistic, nose",Alignment Problem: ,
+2,./images_training/8.jpg,"face of a man, grey hair, glasses, realistic",Correct Image:,
+3,./images_training/9.jpg,"old lady face, white hair, realistic",Incorrect Proportion: ,
+4,./images_training/10.jpg,"school boy face, realistic",Number of Features: ,
+5,./images_training/11.jpg,"face of a girl with glasses, realistic",Wrong Aspect : ,
+6,./images_training/12.jpg,"realistic, toddler face, male",Unrealistic: ,
