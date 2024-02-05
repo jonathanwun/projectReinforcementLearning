@@ -100,7 +100,7 @@ def generate_batches_from_folder(folder_path, batch_size):
     return batch_paths_triple
 
 # Example usage:
-folder_path = 'sample_images'
+folder_path = './sample_images'
 batch_size = 5
 result = generate_batches_from_folder(folder_path, batch_size)
 
@@ -114,7 +114,10 @@ Here starts the part for training/examples section
 df = pd.read_csv('./training_images_log.csv')
 
 # Grouping image paths by category
-category_to_images = df.groupby('category')['image_path'].apply(list).to_dict()
+category_to_images = df.groupby('category_name')['image_path'].apply(list).to_dict()
+
+#Grouping category_name to category
+category_to_names = df.groupby('category')['category_name'].apply(list).to_dict()
 
 #dictionary mapping image paths to explanations
 image_to_explanation = dict(zip(df['image_path'], df['explanation']))
@@ -122,7 +125,7 @@ image_to_explanation = dict(zip(df['image_path'], df['explanation']))
 #dict mapping of image path to prompt
 image_to_prompt = dict(zip(df['image_path'], df['prompt']))
 
-#slider for level of mistake (needs to be put as an image)
+#level of mistake in writing
 
 # Dictionary to keep track of the last shown image index for each category
 last_shown = {category: 0 for category in category_to_images}
@@ -150,36 +153,63 @@ def show_image(category):
         image_path = image_paths[next_index]
         explanation= image_to_explanation.get(image_path,"No explanation available")
         prompt=image_to_prompt.get(image_path,"No prompt available")
-        return image_load(image_path),prompt,explanation
+        return prompt,image_load(image_path),explanation
 
     else:
         return None  # Or return a default image if the category is not found
 
 # Unique categories for dropdown
 categories = df['category'].unique().tolist()
-
+category_name = df['category_name'].unique().tolist()
 
 with gr.Blocks() as training:
     gr.Markdown(
     """
     # Training phase
-    In this phase we look at 2 examples from each of the 6 categories. You need to select one of the below radio buttons to see the examples.  
-    1 - Alignment Problem  
-    2 - Correct Image  
-    3 - Incorrect Proportion  
-    4 - Number of Features  
-    5 - Wrong Aspects  
-    6 - Unrealistic
+    We now look at some examples of the following 6 categories.
+
+    1 - Alignment Problem : 
+    Generated images of faces with misaligned nose, or ears or eyes or overall misaligned facial attributes fall in this category.
+    
+    2 - Correct Image : 
+    Generated images which donot suffer from any of the problems of the other categories are marked as correct images.
+    
+    3 - Incorrect Proportion :
+    This problem category contains images that has wrong proportion of facial features. For example, when 
+    the generated face has one eye larger than the other eye it becomes an incorrect proportion problem.
+
+    4 - Number of Features  : 
+    Generated images containing facial features like nose, ears, mouth and eyes more in count than 
+    the correct count of that feature. For example, if a generated face contains one nose and a half formed second nose it comes under this category.
+    
+    5 - Wrong Aspects  : 
+    This problem category includes generated images that are not correctly generated based on the text prompt.
+    
+    6 - Unrealistic  : 
+    Generated images lacking human-like characteristics come under this category. For example, face images looking like painting or 
+    cartoonish charaters are considered unreaistic to our human perception.
+    
+    In this training phase we look at 2 example images based on the text prompt provided. 
+    On the left, we have the text prompt along with the generated image. On the right, we have the 6 categories which you
+    can select anyone of them to see the example images. Moreover, there are explanations provided on why a certain generated image is categorized as a specific category. 
+    
+    Please select a radio button to see the text prompt,  generated image and explanation. 
+
+    Thank you.
+
     """
     )
    # choices=["Aligmment Problem", "Correct Image","Incorrect Proportion","Number of Features","Wrong Aspects","Unrealistic"]
-    radio=gr.Radio(choices=categories,label="Category of Mistake",info="Please choose 1 category from the 6 options below")
+    #radio=gr.Radio(choices=category_name,label="Category of Mistake",info="Please choose 1 category from the 6 options below")
     #radio=gr.Radio(choices=categories,label="Category of Mistake",info="Choose an option from 1-6 to look at a category example")
     with gr.Row(): 
-     output_image=gr.ImageEditor(height=576,width=416)
-     output_text1=gr.Text(label="Prompt")
-     output_text2=gr.Text(label="Explanation about Category Choice")
-    radio.change(fn=show_image, inputs=[radio], outputs=[output_image,output_text1,output_text2])
+        with gr.Column():
+            output_text1=gr.Text(label="Prompt", info="Select a category from the 6 radio buttons")
+            output_image=gr.ImageEditor(height=576,width=416)
+        with gr.Column():
+            radio=gr.Radio(choices=category_name,label="Category of Mistake",info="Please choose 1 category from the 6 options below")
+            output_text2=gr.Text(label="Explanation about Category Choice",info="Select a category from the 6 radio buttons")
+    radio.change(fn=show_image, inputs=radio, outputs=[output_text1,output_image,output_text2])
 
 
 
