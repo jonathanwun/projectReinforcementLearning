@@ -206,10 +206,12 @@ def save_rating(radio, slider):
 
     path = "ratings_" + user + ".csv"
     df = pd.read_csv(path)
-    categories_radio = gr.Radio(visible=False)
-    slider = gr.Slider(visible=False)
+    
     df.loc[df['pictures']==image_path[current_index],['Category']] = radio
     df.loc[df['pictures']==image_path[current_index],['Level']] = slider
+
+    categories_radio = gr.Radio(visible=False)
+    slider = gr.Slider(visible=False)
 
     df.to_csv(path, header=True, index=False)
 
