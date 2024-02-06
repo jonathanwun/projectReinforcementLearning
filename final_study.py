@@ -195,17 +195,24 @@ def update_data():
     data_array = pd.read_csv("ratings_" + user + ".csv")
     global current_index
     current_index = (current_index + 1) % len(data_array)
-    return data_array['pictures'][current_index]#, data_array[current_index]["category"]
+    img_path = data_array['pictures'][current_index]#, data_array[current_index]["category"]
+    img = Image.open(img_path)
+    return img
     
 def save_rating(radio, slider):
 
     path = "ratings_" + user + ".csv"
-    print(image)
     df = pd.read_csv(path)
-    df[df['pictures']==image_path[current_index]]["Category"] = radio
-    df[df['pictures']==image_path[current_index]]["Level"] = slider
+    # df[df['pictures']==image_path[current_index]]["Category"] = radio
+    # df[df['pictures']==image_path[current_index]]["Level"] = slider
 
+    categories_radio = gr.Radio(visible=False)
+    slider = gr.Slider(visible=False)
+
+    
     df.to_csv(path, header=True, index=False)
+
+    return update_data(), categories_radio, slider
 
     """
     data = [{
@@ -223,7 +230,7 @@ def save_rating(radio, slider):
     else:
         df.to_csv(path, mode='a', header=True, index=False)
     """
-def display_categories(radio):
+def display_categories():
 
     categories_radio = gr.Radio(["Alignment Problems", "Incorrect proportions", "Number of features", "Wrong Aspects", "unrealistic"], interactive=True, visible=True) 
     slider = gr.Slider(minimum=0, maximum=5, step=1, interactive=True, visible=True)
@@ -238,9 +245,11 @@ with gr.Blocks() as main:
         
         """)
     with gr.Column():
-        
+        gr.Textbox(label="Promt", value="this is the promt")
         with gr.Row():
-            image = gr.Image()
+
+            
+            image = gr.ImageEditor(height=576,width=416)
         
             
             with gr.Column():
@@ -264,16 +273,12 @@ with gr.Blocks() as main:
                      inputs=[],
                      outputs=[categories_radio, slider]
                 )
-                
 
+                
                 submit_button = gr.Button("Submit")
     
-        gr.Textbox(label="Promt", value="this is the promt")
+        
              
-            
-    
-    next = gr.Button("Next")
-    next.click()
     
     
     no_button.click(fn=update_data, inputs=[], outputs=[image])
@@ -281,7 +286,7 @@ with gr.Blocks() as main:
     submit_button.click(
         fn=save_rating,
         inputs=[categories_radio, slider],
-        outputs=[]
+        outputs=[image, categories_radio, slider]
     )
     
 
