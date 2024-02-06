@@ -2,6 +2,8 @@ import pandas as pd
 import gradio as gr
 import os
 import random
+import math
+import json
 from PIL import Image
 from pathlib import Path
 
@@ -15,14 +17,23 @@ def generate_batches_from_folder(folder_path, batch_size):
     random.shuffle(image_files)
     
     # Split the triplicated image files into batches
-    batches = [image_files[i:i + batch_size] for i in 
+    batches1 = [image_files[i:i + batch_size] for i in 
                range(0, len(image_files), batch_size)]
+    random.shuffle(image_files)
+    
+    # Split the triplicated image files into batches
+    batches2 = [image_files[i:i + batch_size] for i in 
+               range(0, len(image_files), batch_size)]
+    random.shuffle(image_files)
+    
+    # Split the triplicated image files into batches
+    batches3 = [image_files[i:i + batch_size] for i in 
+               range(0, len(image_files), batch_size)]
+    batches = batches1 + batches2 + batches3
     
     # Generate full paths for each batch
     batch_paths = [[os.path.join(folder_path, image) for image in batch] for batch in batches]
-    batch_paths_triple = [batch for batch in batch_paths for _ in range(3)]
-    
-    return batch_paths_triple
+    return batch_paths
 
 # Example usage:
 folder_path = 'sample_images'
@@ -30,21 +41,37 @@ batch_size = 5
 result = generate_batches_from_folder(folder_path, batch_size)
 
 image_path = []
+nxt_page = False
+user = ""
+
 
 def link_user_to_pics(username):
     df_users = pd.DataFrame()
-    df_users['pictures'] = get_pictures()
+    pics = get_pictures(username)
+    df_users['pictures'] = json.loads(pics.replace('\'', '"'))
     df_users['username'] = username
+    df_users['Category'] = None
+    df_users['Level'] = None
+    print(df_users)
     global image_path
     image_path=df_users['pictures']
     df_users.to_csv(f"ratings_{username}.csv", index=False)
     return True
 
-def get_pictures():
-    return generate_batches_from_folder('sample_images', 5)[0]
+def get_pictures(username):
+    df = pd.read_csv("batches.csv")
+    first_empty_index = (df['username'].isna() | (df['username'] == '')).idxmax()
+    df.at[first_empty_index, 'username'] = username
+    df.to_csv("batches.csv", index=False)
+    return df.at[first_empty_index, 'batch']
+    # for index, row in df.iterrows():
+    #     if any(row):
+    #         df.at[index, 'username'] = username
+    #         df.to_csv("batches.csv", index=False)
+    #         print(row['batch'])
+    #         return row['batch']
 
-nxt_page = False
-user = ""
+
 
 def next_page(username):
     global nxt_page
@@ -79,30 +106,6 @@ with gr.Blocks() as introduction:
     nxt_page = gr.Button(interactive=False, value="Continue")
     username.change(next_page, username, nxt_page)
     nxt_page.click(link_user_to_pics, inputs=username)
-
-def generate_batches_from_folder(folder_path, batch_size):
-    # Get a list of all files in the folder
-    all_files = os.listdir(folder_path)
-    
-    # Filter out non-image files (you can customize this based on your file extensions)
-    image_files = [file for file in all_files if file.lower().endswith(('.jpg'))]
- 
-    random.shuffle(image_files)
-    
-    # Split the triplicated image files into batches
-    batches = [image_files[i:i + batch_size] for i in 
-               range(0, len(image_files), batch_size)]
-    
-    # Generate full paths for each batch
-    batch_paths = [[os.path.join(folder_path, image) for image in batch] for batch in batches]
-    batch_paths_triple = [batch for batch in batch_paths for _ in range(3)]
-    
-    return batch_paths_triple
-
-# Example usage:
-folder_path = './sample_images'
-batch_size = 5
-result = generate_batches_from_folder(folder_path, batch_size)
 
 
 """
@@ -225,35 +228,25 @@ def update_data():
     data_array = pd.read_csv("ratings_" + user + ".csv")
     global current_index
     current_index = (current_index + 1) % len(data_array)
-    return data_array['pictures'][current_index]#, data_array[current_index]["category"]
+    img_path = data_array['pictures'][current_index]#, data_array[current_index]["category"]
+    img = Image.open(img_path)
+    return img
     
 def save_rating(radio, slider):
 
     path = "ratings_" + user + ".csv"
-    print(image)
     df = pd.read_csv(path)
-    df[df['pictures']==image_path[current_index]]["Category"] = radio
-    df[df['pictures']==image_path[current_index]]["Level"] = slider
+    categories_radio = gr.Radio(visible=False)
+    slider = gr.Slider(visible=False)
+    df.loc[df['pictures']==image_path[current_index],['Category']] = radio
+    df.loc[df['pictures']==image_path[current_index],['Level']] = slider
 
     df.to_csv(path, header=True, index=False)
 
-    """
-    data = [{
-        "category" : radio,
-        "level_of_mistake": slider
-    }]
-    
-    df = pd.DataFrame(data)
-    print(df)
+    return update_data(), categories_radio, slider
 
-    
-    path = Path(path)
-    if path.is_file():
-        df.to_csv(path, mode='a', header=False, index=False)
-    else:
-        df.to_csv(path, mode='a', header=True, index=False)
-    """
-def display_categories(radio):
+   
+def display_categories():
 
     categories_radio = gr.Radio(["Alignment Problems", "Incorrect proportions", "Number of features", "Wrong Aspects", "unrealistic"], interactive=True, visible=True) 
     slider = gr.Slider(minimum=0, maximum=5, step=1, interactive=True, visible=True)
@@ -268,9 +261,11 @@ with gr.Blocks() as main:
         
         """)
     with gr.Column():
-        
+        gr.Textbox(label="Promt", value="this is the promt")
         with gr.Row():
-            image = gr.Image()
+
+            
+            image = gr.ImageEditor(height=576,width=416)
         
             
             with gr.Column():
@@ -294,16 +289,12 @@ with gr.Blocks() as main:
                      inputs=[],
                      outputs=[categories_radio, slider]
                 )
-                
 
+                
                 submit_button = gr.Button("Submit")
     
-        gr.Textbox(label="Promt", value="this is the promt")
+        
              
-            
-    
-    next = gr.Button("Next")
-    next.click()
     
     
     no_button.click(fn=update_data, inputs=[], outputs=[image])
@@ -311,7 +302,7 @@ with gr.Blocks() as main:
     submit_button.click(
         fn=save_rating,
         inputs=[categories_radio, slider],
-        outputs=[]
+        outputs=[image, categories_radio, slider]
     )
     
 
