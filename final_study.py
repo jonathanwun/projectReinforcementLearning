@@ -36,7 +36,7 @@ def generate_batches_from_folder(folder_path, batch_size):
     return batch_paths
 
 # Example usage:
-folder_path = './sample_images'
+folder_path = 'sample_images'
 batch_size = 5
 result = generate_batches_from_folder(folder_path, batch_size)
 
