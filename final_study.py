@@ -45,8 +45,9 @@ nxt_page = False
 user = ""
 training_active = False
 study_active = False
-default_image = gr.Image(f'images/a realistic face (1).jpg')
+default_image = Image.open(f'images/a realistic face (1).jpg')
 global training_tab
+
 training_tab = gr.Tab(label="training", interactive=False)
 
 
@@ -62,11 +63,14 @@ def link_user_to_pics(username):
     training_active = True
     study_active = True
     global default_image
-    default_image = gr.Image(df['users'][0])
+    default_image = gr.Image(df_users['username'][0])
     print(df_users)
     global image_path
     image_path=df_users['pictures']
     df_users.to_csv(f"ratings_{username}.csv", index=False)
+    global data_array
+    data_array = df_users
+
     training.launch(inbrowser=True)
     return True
 
@@ -177,7 +181,8 @@ categories = df['category'].unique().tolist()
 category_name = df['category_name'].unique().tolist()
 
 def continue_to_main():
-    
+
+    default_image = data_array['pictures'][current_index]
     main.launch(inbrowser=True)
     
 with gr.Blocks() as training:
@@ -237,16 +242,36 @@ with gr.Blocks() as training:
 Here starts the part for the main study
 """
 
+def continue_to_end():
+    finished_screen.launch(inbrowser=True)
 
 # Initial index for displaying the first image
 current_index = 0
+# Boolean which indicates if all pictures were displayed
+reached_end = False
 # Function to update the displayed image and category
+
 def update_data():
+
+        
     data_array = pd.read_csv("ratings_" + user + ".csv")
     global current_index
     current_index = (current_index + 1) % len(data_array)
     img_path = data_array['pictures'][current_index]#, data_array[current_index]["category"]
     img = Image.open(img_path)
+    
+    current_picture_label = gr.Label(str(current_index +1) + "/" + str(batch_size))
+    
+    global reached_end
+
+    print(reached_end)
+    if reached_end:
+        continue_to_end()
+        
+    if (current_index+1) == batch_size:
+        reached_end = True
+    
+    img = gr.ImageEditor(img,height=576,width=416, label=str(current_index+1) + "/" + str(batch_size))
     return img
     
 def save_rating(radio, slider):
@@ -264,6 +289,17 @@ def save_rating(radio, slider):
 
     return update_data(), categories_radio, slider
 
+def save_no_mistake():
+    path = "ratings_" + user + ".csv"
+    df = pd.read_csv(path)
+    
+    df.loc[df['pictures']==image_path[current_index],['Category']] = "Correct Image"
+    df.loc[df['pictures']==image_path[current_index],['Level']] = 0
+
+    df.to_csv(path, header=True, index=False)
+
+    return update_data()
+
    
 def display_categories():
 
@@ -274,59 +310,62 @@ def display_categories():
 
     
 with gr.Blocks() as main:
-    
     gr.Markdown(
         """
         # Main study
+        Now it is your turn. Look closely at the pictures and look for mistakes in the pictures.
+         
+        If you spot a mistake, then click "YES" and say which category the mistake has and also which degree the mistake has in your opinion.
+        Then submit your rating, and the next image appears. 
+        If you don't spot any mistake, click "NO", and the next image apppears.
         
         """)
+    
+    gr.Textbox(label="Promt", value="this is the promt")
+
+    
+    image = gr.ImageEditor(default_image, height=576,width=416, label=str(current_index+1) + "/" + str(batch_size))
+    
     with gr.Column():
-        gr.Textbox(label="Promt", value="this is the promt")
-        with gr.Row():
-
-            
-            #image = gr.ImageEditor(height=576,width=416)
-            image = gr.ImageEditor(default_image, height=576,width=416)
-            
-            with gr.Column():
-                gr.Markdown(
-                    """
-                    # Do you spot any Mistake in this picture?
-                    """
-                )
-                yes_button = gr.Button("YES")
-                # yes_button.click(display_categories, inputs=[], outputs=[gr.Radio(), gr.Slider()])
-                no_button  = gr.Button("NO")
-                #radio = gr.Radio(["YES", "NO"], label="Select")   
-                
-                
-                
-                categories_radio = gr.Radio(visible=False)
-                
-                slider = gr.Slider(visible=False)
-
-                yes_button.click(display_categories, 
-                     inputs=[],
-                     outputs=[categories_radio, slider]
-                )
-
-                
-                submit_button = gr.Button("Submit")
-    
+        gr.Markdown(
+            """
+            # Do you spot any Mistake in this picture?
+            """
+        )
+        yes_button = gr.Button("YES")
+        # yes_button.click(display_categories, inputs=[], outputs=[gr.Radio(), gr.Slider()])
+        no_button  = gr.Button("NO")
+        #radio = gr.Radio(["YES", "NO"], label="Select")   
         
-             
-    
-    
-    no_button.click(fn=update_data, inputs=[], outputs=[image])
+        
+        
+        categories_radio = gr.Radio(visible=False)
+        
+        slider = gr.Slider(visible=False)
+
+        yes_button.click(display_categories, 
+             inputs=[],
+             outputs=[categories_radio, slider]
+        )
+
+        
+        submit_button = gr.Button("Submit")
+
+    no_button.click(fn=save_no_mistake, inputs=[], outputs=[image])
 
     submit_button.click(
         fn=save_rating,
         inputs=[categories_radio, slider],
         outputs=[image, categories_radio, slider]
     )
-    
 
-
+with gr.Blocks() as finished_screen:
+    gr.Markdown(
+        """
+        # Thank you for Participating!!!
+        You can now close the study
+        """
+    )
 # demo = gr.TabbedInterface([introduction, training, main], ["Introduction", "Examples", "Main Study"])
 
 introduction.launch(inbrowser=True)
