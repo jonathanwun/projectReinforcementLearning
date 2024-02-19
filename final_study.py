@@ -49,8 +49,10 @@ default_image = Image.open(f'images/a realistic face (1).jpg')
 global training_tab
 
 training_tab = gr.Tab(label="training", interactive=False)
-
-
+default_image_path = 'C:/RL_Project/projectReinforcementLearning/images_training/2.jpg'
+default_explain="Correct Image :\n\nThis image is classified as a correct image since it does not have any of the other five problems we are looking at in a generated face. The image accurately reflects the prompt that we have provided and the facial structure of the man looks realistic."
+default_level="No mistakes"
+default_cat_exp="Generated faces do not suffer from any kind of structural or feature-related problem. Realistic human faces."
 def link_user_to_pics(username):
     df_users = pd.DataFrame()
     pics = get_pictures(username)
@@ -144,10 +146,16 @@ image_to_explanation = dict(zip(df['image_path'], df['explanation']))
 #dict mapping of image path to prompt
 image_to_prompt = dict(zip(df['image_path'], df['prompt']))
 
+#dictionary mapping image paths to levels of mistake
+image_to_mistake = dict(zip(df['image_path'], df['level_of_mistake']))
+
+#dict mapping of image path to category explanation
+image_to_cat_exp = dict(zip(df['image_path'], df['category_explanation']))
+
 #slider for level of mistake (needs to be put as an image)
 
 # Dictionary to keep track of the last shown image index for each category
-last_shown = {category: 0 for category in category_to_images}
+#last_shown = {category: 0 for category in category_to_images}
 
 # Function to load an image
 def image_load(image_path):
@@ -160,19 +168,14 @@ def image_load(image_path):
 def show_image(category):
     if category in category_to_images:
         # Get the list of image paths for this category
-        image_paths = category_to_images[category]
-        # Check if there are images in the category
-        if not image_paths:
-            return None  # Or return a default image if there are no images
-        # Get the index of the next image to show
-        next_index = (last_shown[category] + 1) % len(image_paths)
-        last_shown[category] = next_index  # Update the last shown index
-        #explain_text=f"Displaying image {next_index + 1} of {len(image_paths)} for category '{category}'"
-        # Get the image path and display the image
-        image_path = image_paths[next_index]
-        explanation= image_to_explanation.get(image_path,"No explanation available")
+        image_path = category_to_images[category][0]
+    
+        explanation= image_to_explanation.get(image_path,"No explanation available for this image")
         prompt=image_to_prompt.get(image_path,"No prompt available")
-        return prompt,image_load(image_path),explanation
+        category_explain=image_to_cat_exp.get(image_path, "No explanation of category")
+        level_msk=image_to_mistake.get(image_path,"No levels specified")
+        return prompt,image_load(image_path),category_explain,explanation,level_msk
+    
     else:
         return None  # Or return a default image if the category is not found
 
@@ -190,50 +193,30 @@ with gr.Blocks() as training:
     gr.Markdown(
     """
     # Training phase
-     We now look at some examples of the following 6 categories.
-     
-    1 - Alignment Problem : 
-    Generated images of faces with misaligned nose, or ears or eyes or overall misaligned facial attributes fall in this category.
     
-    2 - Correct Image : 
-    Generated images which donot suffer from any of the problems of the other categories are marked as correct images.
+    On the left, we have the text prompt along with the generated image. 
+    On the right, we have the 6 radio buttons with categories and respective explanations. 
     
-    3 - Incorrect Proportion :
-    This problem category contains images that has wrong proportion of facial features. For example, when 
-    the generated face has one eye larger than the other eye it becomes an incorrect proportion problem.
-    4 - Number of Features  : 
-    Generated images containing facial features like nose, ears, mouth and eyes more in count than 
-    the correct count of that feature. For example, if a generated face contains one nose and a half formed second nose it comes under this category.
+    Currently we can see first radio button 'Correct Image' is selected and an example image with respective text prompt, category explanation and reason for choice of category displayed.
     
-    5 - Wrong Aspects  : 
-    This problem category includes generated images that are not correctly generated based on the text prompt.
-    
-    6 - Unrealistic  : 
-    Generated images lacking human-like characteristics come under this category. For example, face images looking like painting or 
-    cartoonish charaters are considered unreaistic to our human perception.
-    
-    In this training phase we look at 2 example images based on the text prompt provided. 
-    On the left, we have the text prompt along with the generated image. On the right, we have the 6 categories which you
-    can select anyone of them to see the example images. Moreover, there are explanations provided on why a certain generated image is categorized as a specific category. 
-    
-    Please select a radio button to see the text prompt,  generated image and explanation. 
+    Please select other radio buttons to see respective examples. 
     Thank you.
 
     """
     )
-   # choices=["Aligmment Problem", "Correct Image","Incorrect Proportion","Number of Features","Wrong Aspects","Unrealistic"]
-    
-    #radio=gr.Radio(choices=categories,label="Category of Mistake",info="Choose an option from 1-6 to look at a category example")
+
     with gr.Row(): 
      with gr.Column():
-            output_text1=gr.Text(label="Prompt", info="Select a category from the 6 radio buttons")
-            output_image=gr.ImageEditor(height=576,width=416)
+            output_text1=gr.Text(label="Prompt", info="Select a category from the 6 radio buttons", value="sleeping face, man, realistic")
+            output_image=gr.ImageEditor(height=576,width=416,value=default_image_path)
      with gr.Column():
-            radio=gr.Radio(choices=category_name,label="Category of Mistake",info="Please choose 1 category from the 6 options below")
-            output_text2=gr.Text(label="Explanation about Category Choice",info="Select a category from the 6 radio buttons")
-    radio.change(fn=show_image, inputs=radio, outputs=[output_text1,output_image,output_text2])
+            radio=gr.Radio(choices=category_name,value="Correct Image", label="Category of Mistake",info="Please choose 1 category from the 6 options below")
+            output_text2=gr.Text(label="Short Explanation of Category",value=default_cat_exp)
+            output_text3=gr.Text(label="Reason for Category Choice",info="Why this image belongs to the above selected category",value =default_explain)
+            output_text4=gr.Text(label="Level of Mistake",value=default_level)
+    radio.change(fn=show_image, inputs=radio, outputs=[output_text1,output_image,output_text2,output_text3,output_text4])
 
-    button = gr.Button("Continue")
+    button = gr.Button("Continue To Pre-Study")
     button.click(continue_to_main)
 
     
@@ -321,7 +304,7 @@ with gr.Blocks() as main:
         
         """)
     
-    gr.Textbox(label="Promt", value="this is the promt")
+    gr.Textbox(label="prompt", value="this is the prompt")
 
     
     image = gr.ImageEditor(default_image, height=576,width=416, label=str(current_index+1) + "/" + str(batch_size))
