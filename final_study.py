@@ -53,6 +53,7 @@ default_image_path = './images_training/2.jpg'
 default_explain="Correct Image :\n\nThis image is classified as a correct image since it does not have any of the other five problems we are looking at in a generated face. The image accurately reflects the prompt that we have provided and the facial structure of the man looks realistic."
 default_level="No mistakes"
 default_cat_exp="Generated faces do not suffer from any kind of structural or feature-related problem. Realistic human faces."
+
 def link_user_to_pics(username):
     df_users = pd.DataFrame()
     pics = get_pictures(username)
@@ -72,8 +73,6 @@ def link_user_to_pics(username):
     df_users.to_csv(f"ratings_{username}.csv", index=False)
     global data_array
     data_array = df_users
-
-    training.launch(inbrowser=True)
     return True
 
 def get_pictures(username):
