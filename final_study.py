@@ -49,7 +49,7 @@ default_image = Image.open(f'images/a realistic face (1).jpg')
 global training_tab
 
 training_tab = gr.Tab(label="training", interactive=False)
-default_image_path = 'C:/RL_Project/projectReinforcementLearning/images_training/2.jpg'
+default_image_path = './images_training/2.jpg'
 default_explain="Correct Image :\n\nThis image is classified as a correct image since it does not have any of the other five problems we are looking at in a generated face. The image accurately reflects the prompt that we have provided and the facial structure of the man looks realistic."
 default_level="No mistakes"
 default_cat_exp="Generated faces do not suffer from any kind of structural or feature-related problem. Realistic human faces."
