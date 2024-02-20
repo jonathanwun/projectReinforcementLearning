@@ -306,33 +306,34 @@ with gr.Blocks() as main:
     
     gr.Textbox(label="prompt", value="this is the prompt")
 
-    
-    image = gr.ImageEditor(default_image, height=576,width=416, label=str(current_index+1) + "/" + str(batch_size))
-    
-    with gr.Column():
-        gr.Markdown(
-            """
-            # Do you spot any Mistake in this picture?
-            """
-        )
-        yes_button = gr.Button("YES")
-        # yes_button.click(display_categories, inputs=[], outputs=[gr.Radio(), gr.Slider()])
-        no_button  = gr.Button("NO")
-        #radio = gr.Radio(["YES", "NO"], label="Select")   
+    with gr.Row():
         
+        image = gr.ImageEditor(default_image, height=576,width=416, label=str(current_index+1) + "/" + str(batch_size))
         
+        with gr.Column():
+            gr.Markdown(
+                """
+                # Do you spot any Mistake in this picture?
+                """
+            )
+            yes_button = gr.Button("YES")
+            # yes_button.click(display_categories, inputs=[], outputs=[gr.Radio(), gr.Slider()])
+            no_button  = gr.Button("NO")
+            #radio = gr.Radio(["YES", "NO"], label="Select")   
+            
+            
+            
+            categories_radio = gr.Radio(visible=False)
+            
+            slider = gr.Slider(visible=False)
         
-        categories_radio = gr.Radio(visible=False)
+            yes_button.click(display_categories, 
+                 inputs=[],
+                 outputs=[categories_radio, slider]
+            )
         
-        slider = gr.Slider(visible=False)
-
-        yes_button.click(display_categories, 
-             inputs=[],
-             outputs=[categories_radio, slider]
-        )
-
-        
-        submit_button = gr.Button("Submit")
+            
+            submit_button = gr.Button("Submit")
 
     no_button.click(fn=save_no_mistake, inputs=[], outputs=[image])
 
