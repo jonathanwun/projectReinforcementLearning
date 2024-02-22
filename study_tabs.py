@@ -240,18 +240,18 @@ class StudyFramework:
                     # no_button.click(fn=save_no_mistake, inputs=[], outputs=[image])
                     
                 
-                    submit_button.click(
-                        fn=show_solution,
-                        inputs=[categories_radio, slider, current_prestudy_index],
-                        outputs=[answer_text, current_prestudy_index]
-                    )
-                with gr.Row():
-                    img2 = gr.Image()
-                with gr.Row():
-                    tab2_prev = gr.Button("Prev")
-                    tab2_submit = gr.Button("Submit", interactive=False)
-                tab2.select(self.on_tab2_clicked, outputs=[img2, tab2, tabs]) # TODO provide all components that should get an update when Tab2 is clicked
-                
+                    #submit_button.click(
+                     #   fn=show_solution,
+                      #  inputs=[categories_radio, slider, current_prestudy_index],
+                       # outputs=[answer_text, current_prestudy_index]
+                    #)
+                    with gr.Row():
+                        img2 = gr.Image()
+                    with gr.Row():
+                        tab2_prev = gr.Button("Prev")
+                        tab2_submit = gr.Button("Submit", interactive=False)
+                    tab2.select(self.on_tab2_clicked, outputs=[img2, tab2, tabs]) # TODO provide all components that should get an update when Tab2 is clicked
+                    
                 
                 ###### FOURTH TAB ###############  
                 with gr.Tab("Fourth", interactive=False, visible=False, id=3) as tab3:
