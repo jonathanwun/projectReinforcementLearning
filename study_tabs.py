@@ -106,33 +106,40 @@ def link_user_to_pics(username):
 
 def display_categories():
 
-    categories_radio = gr.Radio(["Alignment Problems", "Incorrect proportions", "Number of features", "Wrong Aspects", "unrealistic"], interactive=True, visible=True) 
+    categories_radio = gr.Radio(["Alignment Problem", "Incorrect Proportion", "Number of Features", "Wrong Aspect", "Unrealistic"], interactive=True, visible=True) 
     slider = gr.Slider(minimum=0, maximum=5, step=1, interactive=True, visible=True)
     outputs = [categories_radio, slider]
     return outputs
 
+current_pre_study_index = 0
 def update_prestudy_data():
-
-        
     data_array = pd.read_csv("prestudy_log.csv")
-    global current_index
-    current_index = (current_index + 1) % len(data_array)
-    img_path = data_array['prestudy_log'][current_index]#, data_array[current_index]["category"]
+    global current_pre_study_index
+    
+    all_images_done = current_pre_study_index >= 5
+    current_pre_study_index = (current_pre_study_index + 1) % len(data_array)
+    img_path = data_array['image_path'][current_pre_study_index]#, data_array[current_index]["category"]
     img = Image.open(img_path)
     
-    current_picture_label = gr.Label(str(current_index +1) + "/" + str(batch_size))
-    
-    img = gr.ImageEditor(img,height=576,width=416, label=str(current_index+1) + "/" + str(batch_size))
-    return img
 
-def show_solution(category, slider, current_pre_study_index):
+    current_picture_label = gr.Label(str(current_pre_study_index+1) + "/ 6")
+
+    img = gr.ImageEditor(img,height=576,width=416, label=current_picture_label)
+    if all_images_done:
+        return img, gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True)
+    return img, gr.Radio(visible=False,value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=False)
+
+def show_solution(category, slider):
     data_array = pd.read_csv("prestudy_log.csv")
+
+    print(category)
     if category == data_array['category_name'][current_pre_study_index]:
         answer_text = f"Your selection is correct. Level of mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
-        return answer_text, current_pre_study_index+1
+
+        return gr.Text(answer_text, visible=True), gr.Button(visible=True)
     else:
         answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}, level of mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
-        return answer_text, current_pre_study_index+1
+        return gr.Text(answer_text, visible=True), gr.Button(visible=True)
 
 # TODO load images from PATH
 def dummy_image_loader(path):
@@ -185,7 +192,7 @@ class StudyFramework:
                             output_text4=gr.Text(label="Level of Mistake",value=default_level)
                     radio.change(fn=show_image, inputs=radio, outputs=[output_text1,output_image,output_text2,output_text3,output_text4])
                     with gr.Row():
-                        tab1_next = gr.Button("Next", interactive=True)
+                        tab1_next = gr.Button("Pre-Study", interactive=True)
                     tab1.select(self.on_tab1_clicked, outputs=[tab1, tabs]) # TODO provide all components that should get an update when Tab1 is clicked
                     
                     
@@ -207,8 +214,8 @@ class StudyFramework:
                     gr.Textbox(label="prompt", value="this is the prompt")
 
                     with gr.Row():
-                        current_prestudy_index = 0
-                        image = gr.ImageEditor(first_image, height=576,width=416, label=str(current_prestudy_index+1) + "/" + "6")
+                        current_pre_study_index = 0
+                        image = gr.ImageEditor(first_image, height=576,width=416, label=str(current_pre_study_index+1) + "/" + "6")
                         
                         with gr.Column():
                             gr.Markdown(
@@ -235,31 +242,96 @@ class StudyFramework:
                             
                             submit_button = gr.Button("Submit")
                             answer_text=""
-                            answer = gr.Text(value=answer_text)
+                            
+                            answer = gr.Text(value=answer_text,visible=False)
+                            next_image_button = gr.Button("Next Image",visible=False)
                 
-                    # no_button.click(fn=save_no_mistake, inputs=[], outputs=[image])
+                             #no_button.click(fn=save_no_mistake, inputs=[], outputs=[image])
                     
                 
-                    #submit_button.click(
-                     #   fn=show_solution,
-                      #  inputs=[categories_radio, slider, current_prestudy_index],
-                       # outputs=[answer_text, current_prestudy_index]
-                    #)
-                    with gr.Row():
-                        img2 = gr.Image()
-                    with gr.Row():
-                        tab2_prev = gr.Button("Prev")
-                        tab2_submit = gr.Button("Submit", interactive=False)
-                    tab2.select(self.on_tab2_clicked, outputs=[img2, tab2, tabs]) # TODO provide all components that should get an update when Tab2 is clicked
+                            submit_button.click(
+                                fn=show_solution,
+                                inputs=[categories_radio, slider],
+                                outputs=[answer, next_image_button]
+                            )
+                            with gr.Row():
+                                tab2_prev = gr.Button("Prev")
+                                tab2_submit = gr.Button("Main Study", interactive=False)
+                            
+                            next_image_button.click(
+                                fn=update_prestudy_data,
+                                inputs=[],
+                                outputs=[image,categories_radio,slider,answer,next_image_button,tab2_submit]
+                            )
+
+                        tab2.select(self.on_tab2_clicked, outputs=[tab2, tabs]) # TODO provide all components that should get an update when Tab2 is clicked
+                            
+            
                     
-                
                 ###### FOURTH TAB ###############  
                 with gr.Tab("Fourth", interactive=False, visible=False, id=3) as tab3:
-                    with gr.Row():
-                        img3 = gr.Image()
-                    with gr.Row():
-                        tab3_submit = gr.Button("Submit")
-                    tab3.select(self.on_tab3_clicked, outputs=[img3, tab0, tab1, tab2]) # TODO provide all components that should get an update when Tab2 is clicked
+                        gr.Markdown(
+                        """
+                        # Main study
+                        Now it is your turn. Look closely at the pictures and look for mistakes in the pictures.
+                        
+                        If you spot a mistake, then click "YES" and say which category the mistake has and also which degree the mistake has in your opinion.
+                        Then submit your rating, and the next image appears. 
+                        If you don't spot any mistake, click "NO", and the next image apppears.
+                        
+                        """)
+        
+                        gr.Textbox(label="prompt", value="this is the prompt")
+
+                        with gr.Row():
+                           # image = gr.ImageEditor(default_image, height=576,width=416, label=str(current_index+1) + "/" + str(batch_size))
+                            print("hello")
+                        with gr.Column():
+                            gr.Markdown(
+                            """
+                            # Do you spot any Mistake in this picture?
+                            """
+                            )
+                        yes_button = gr.Button("YES")
+                        # yes_button.click(display_categories, inputs=[], outputs=[gr.Radio(), gr.Slider()])
+                        no_button  = gr.Button("NO")
+                        #radio = gr.Radio(["YES", "NO"], label="Select")   
+                    
+                        categories_radio = gr.Radio(visible=False)
+                    
+                        slider = gr.Slider(visible=False)
+                
+                        yes_button.click(display_categories, 
+                        inputs=[],
+                        outputs=[categories_radio, slider]
+                        )
+                
+                    
+                        submit_button = gr.Button("Submit",interactive=False)
+
+                       # no_button.click(fn=save_no_mistake, inputs=[], outputs=[image])
+                        """
+                        submit_button.click(
+                            fn=save_rating,
+                            inputs=[categories_radio, slider],
+                            outputs=[image, categories_radio, slider]
+                        )
+                        """
+                            
+                        with gr.Row():
+                            tab3_submit = gr.Button("Finish Study")
+                        
+                        tab3.select(self.on_tab3_clicked, outputs=[tab3,tabs]) # TODO provide all components that should get an update when Tab2 is clicked
+
+                ###### FIFTH TAB ###############  
+                with gr.Tab("Fifth", interactive=False, visible=False, id=4) as tab4:
+                    gr.Markdown(
+                                """
+                              # Thank you for Participating!!!
+                                You can now close the study
+                                 """
+                                )
+                    tab4.select(self.on_tab4_clicked, outputs=[tab4,tabs]) # TODO provide all components that should get an update when Tab2 is clicked
 
                 #### EVENT HANDLING ###############
                 tab0_next.click(lambda :gr.Tabs(selected=1), outputs=tabs)
@@ -304,6 +376,11 @@ class StudyFramework:
         image = dummy_image_loader("/path/to/image")
         image = add_border(image)
         return image, gr.Tab(visible=False), gr.Tab(visible=False), gr.Tab(visible=False)
+    
+    def on_tab4_clicked(self):
+        image=dummy_image_loader("/path/to/image")
+        image = add_border(image)
+        return image,gr.Tab(visible=False), gr.Tab(visible=False), gr.Tab(visible=False),gr.Tab(visible=False)
     
     def launch(self):
         self.app.queue()
