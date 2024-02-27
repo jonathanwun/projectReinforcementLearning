@@ -38,4 +38,7 @@ myenv/
 .vscode
 flagged/
 
+# ratings
+ratings_*
+
 
