@@ -271,16 +271,7 @@ def save_rating(radio, slider):
 
     return update_data(), categories_radio, slider
 
-def save_no_mistake():
-    path = "ratings_" + user + ".csv"
-    df = pd.read_csv(path)
-    
-    df.loc[df['pictures']==image_path[current_index],['Category']] = "Correct Image"
-    df.loc[df['pictures']==image_path[current_index],['Level']] = 0
 
-    df.to_csv(path, header=True, index=False)
-
-    return update_data()
 
    
 def display_categories():
