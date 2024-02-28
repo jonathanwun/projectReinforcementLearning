@@ -126,7 +126,8 @@ def display_categories():
     slider = gr.Slider(minimum=0, maximum=5, step=1, interactive=True, visible=True)
     
     return categories_radio, slider
-current_pre_study_index = 1
+
+current_pre_study_index = 0
 def update_prestudy_data():
     
     data_array = pd.read_csv("prestudy_log.csv")
@@ -134,6 +135,7 @@ def update_prestudy_data():
     
     all_images_done = current_pre_study_index >= 5
     current_pre_study_index = (current_pre_study_index + 1) % len(data_array)
+    print(current_pre_study_index)
     img_path = data_array['image_path'][current_pre_study_index]#, data_array[current_index]["category"]
     img = Image.open(img_path)
     
@@ -153,11 +155,11 @@ def show_solution(category, slider):
     print(category)
 
     if category == data_array['category_name'][current_pre_study_index]:
-        answer_text = f"Your selection is correct. Level of mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection is correct. Level of Mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
 
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
     else:
-        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}, level of mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}, Level of Mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
 
 def show_solution_no_button():
@@ -165,11 +167,11 @@ def show_solution_no_button():
     data_array = pd.read_csv("prestudy_log.csv")
 
     if  (data_array['category_name'][current_pre_study_index] == "Correct Image"):
-        answer_text = f"Your selection is correct. Level of mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection is correct. Level of Mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
 
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
     else:
-        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}, level of mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}, Level of Mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
 
 # Initial index for displaying the first image
