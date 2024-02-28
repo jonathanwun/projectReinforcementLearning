@@ -77,8 +77,8 @@ def next_page(username):
     user = username
     if (len(username)>0) & (len(username)<12):
         nxt_page = True
-        return gr.Button(interactive=True, value="Next")
-    return gr.Button(interactive=False, value="Next")
+        return gr.Button(interactive=True)
+    return gr.Button(interactive=False)
 
 def get_pictures(username):
     df = pd.read_csv("batches.csv")
@@ -263,7 +263,7 @@ class StudyFramework:
                     radio.change(fn=show_image, inputs=radio, outputs=[output_text1,output_image,output_text2,output_text3,output_text4])
                     with gr.Row():
                         tab1_next = gr.Button("Pre-Study", interactive=True)
-                    tab1.select(self.on_tab1_clicked, outputs=[tab1, tabs]) # TODO provide all components that should get an update when Tab1 is clicked
+                    tab1.select(self.on_tab1_clicked, outputs=[tab1]) # TODO provide all components that should get an update when Tab1 is clicked
                     
                     
                     
@@ -274,12 +274,13 @@ class StudyFramework:
                     gr.Markdown(
                         """
                         # Pre-Study
-                        Now it is your turn. Look closely at the pictures and look for mistakes in the pictures.
+                        Now it is your turn. We have 6 images for you to try before moving to Main study.
                          
                         If you spot a mistake, then click "YES" and say which category the mistake has and also which degree the mistake has in your opinion.
-                        Then submit your rating, and the next image appears. 
-                        If you don't spot any mistake, click "NO", and the next image apppears.
+                        Then click on "Submit" to view if your answer was correct or wrong. Click on "Next Image" to see the next image. 
                         
+                        If you don't spot any mistake, click "NO", and the next image apppears.
+                    
                         """)
                     
 
@@ -349,12 +350,15 @@ class StudyFramework:
                         gr.Markdown(
                         """
                         # Main study
-                        Now it is your turn. Look closely at the pictures and look for mistakes in the pictures.
+                        Hello! 
+                        We will now look for mistakes in the pictures and categorize them into 5 categories of mistake.
                         
                         If you spot a mistake, then click "YES" and say which category the mistake has and also which degree the mistake has in your opinion.
                         Then submit your rating, and the next image appears. 
+                        
                         If you don't spot any mistake, click "NO", and the next image apppears.
                         
+                        Have Fun.
                         """)
 
                         
@@ -448,14 +452,14 @@ class StudyFramework:
         # TODO update all components in tab1
         image = dummy_image_loader("/path/to/image")
         image = add_border(image)
-        return gr.Tab("Second", interactive=True, id=1)
+        return gr.Tab(interactive=True,visible=True, id=1)
             
     def on_tab2_clicked(self):
         print("tab2 clicked")
         # TODO update all components in tab2
         image = dummy_image_loader("/path/to/image")
         image = add_border(image)
-        return gr.Tab("Third", interactive=True, visible=True, id=2)
+        return gr.Tab(interactive=True, visible=True, id=2)
     
     def on_tab3_clicked(self):
         print("tab3 clicked")
