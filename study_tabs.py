@@ -130,7 +130,7 @@ def update_prestudy_data():
         return img, gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True), gr.Button(interactive=False)
     return img, gr.Radio(visible=False,value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=False), gr.Button(interactive=False)
 
-def show_solution(category, slider, no_button: bool):
+def show_solution(category, slider):
     
     data_array = pd.read_csv("prestudy_log.csv")
 
@@ -416,7 +416,7 @@ class StudyFramework:
                                 You can now close the study
                                  """
                                 )
-                    tab4.select(self.on_tab4_clicked, outputs=[tab0, tab1, tab2, tab3, tab4]) # TODO provide all components that should get an update when Tab2 is clicked
+                    tab4.select(self.on_tab4_clicked, outputs=[tab3, tab4]) # TODO provide all components that should get an update when Tab2 is clicked
 
                 #### EVENT HANDLING ###############
                 tab0_next.click(lambda :gr.Tabs(selected=1), outputs=tabs)
@@ -425,7 +425,7 @@ class StudyFramework:
                 tab2_prev.click(lambda :gr.Tabs(selected=1), outputs=tabs)
                 tab2_submit.click(lambda :gr.Tabs(selected=3), outputs=tabs)
 
-                tab3_finish_study.click(lambda: gr.Tabs(selected=4), outputs=tabs)
+                tab3_finish_study.click(lambda :gr.Tabs(selected=4), outputs=tabs)
                 # tab1_choices.select(self.on_choise, inputs=tab1_choices, outputs=[tab2, tab1_next])
                 # tab2_choices.select(self.on_choise, inputs=tab2_choices, outputs=[tab3, tab2_submit])
                 # tab3_choices.select(self.on_choise, inputs=tab3_choices, outputs=[tab3, tab3_submit])
@@ -469,7 +469,9 @@ class StudyFramework:
     
     def on_tab4_clicked(self):
         print("Tab 5")
-        return gr.Tab(interactive=False, visible=False, id=0), gr.Tab(interactive=False, visible=False, id=1), gr.Tab(interactive=False, visible=False, id=2), gr.Tab(interactive=False, visible=False, id=3), gr.Tab(interactive=True, visible=True, id=4)
+        #return gr.Tab("First", interactive=False, visible=False, id=0), gr.Tab("Second", interactive=False, visible=False, id=1), gr.Tab("Third", interactive=False, visible=False, id=2), gr.Tab("Fourth", interactive=False, visible=False, id=3), gr.Tab("Fith", interactive=True, visible=True, id=4)
+        return gr.Tab("Fourth", interactive=False, visible=False, id=3), gr.Tab("Fith", interactive=True, visible=True, id=4)
+        
     
     def launch(self):
         self.app.queue()
