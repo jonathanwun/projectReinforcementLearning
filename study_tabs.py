@@ -127,8 +127,8 @@ def update_prestudy_data():
     img = gr.ImageEditor(img,height=576,width=416, label=current_picture_label)
     
     if all_images_done:
-        return img, gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True), gr.Button(interactive=False)
-    return img, gr.Radio(visible=False,value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=False), gr.Button(interactive=False)
+        return img, gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True), gr.Button(interactive=False),gr.Button(interactive=False), gr.Button(interactive=False)
+    return img, gr.Radio(visible=False,value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=False), gr.Button(interactive=False),gr.Button(), gr.Button()
 
 def show_solution(category, slider):
     
@@ -338,7 +338,7 @@ class StudyFramework:
                         next_image_button.click(
                             fn=update_prestudy_data,
                             inputs=[],
-                            outputs=[image,categories_radio,slider,answer,next_image_button,tab2_submit, submit_button]
+                            outputs=[image,categories_radio,slider,answer,next_image_button,tab2_submit, submit_button,yes_button,no_button]
                         )
 
                         tab2.select(self.on_tab2_clicked, outputs=[tab2, tabs]) # TODO provide all components that should get an update when Tab2 is clicked
