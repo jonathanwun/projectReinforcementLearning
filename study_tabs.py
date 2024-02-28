@@ -263,7 +263,7 @@ class StudyFramework:
                     radio.change(fn=show_image, inputs=radio, outputs=[output_text1,output_image,output_text2,output_text3,output_text4])
                     with gr.Row():
                         tab1_next = gr.Button("Pre-Study", interactive=True)
-                    tab1.select(self.on_tab1_clicked, outputs=[tab1]) # TODO provide all components that should get an update when Tab1 is clicked
+                    tab1.select(self.on_tab1_clicked, outputs=[tab1,tabs]) # TODO provide all components that should get an update when Tab1 is clicked
                     
                     
                     
