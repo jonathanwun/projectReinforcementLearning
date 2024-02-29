@@ -139,6 +139,7 @@ def update_prestudy_data():
     img_path = data_array['image_path'][current_pre_study_index]#, data_array[current_index]["category"]
     img = Image.open(img_path)
     
+    prompt_prestudy=data_array["prompt"][current_pre_study_index]
 
     current_picture_label = f"{current_pre_study_index}/6"
 
@@ -146,7 +147,7 @@ def update_prestudy_data():
     
     if all_images_done:
         return img, gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True), gr.Button(interactive=False),gr.Button(interactive=False), gr.Button(interactive=False)
-    return img, gr.Radio(visible=False,value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=False), gr.Button(interactive=False),gr.Button(), gr.Button()
+    return prompt_prestudy,img, gr.Radio(visible=False,value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=False), gr.Button(interactive=False),gr.Button(), gr.Button()
 
 def show_solution(category, slider):
     
@@ -316,7 +317,7 @@ class StudyFramework:
                     with gr.Row():
                         current_pre_study_index = 0
                         with gr.Column():
-                            gr.Textbox(label="Prompt", value="this is the prompt")
+                            prompt_pre= gr.Textbox(label="Prompt", value="boy face, realistic, happy")
                             image = gr.ImageEditor(first_image, height=576,width=416, label= "1/6")
 
                         with gr.Column():
@@ -367,7 +368,7 @@ class StudyFramework:
                         next_image_button.click(
                             fn=update_prestudy_data,
                             inputs=[],
-                            outputs=[image,categories_radio,slider,answer,next_image_button,tab2_submit, submit_button,yes_button,no_button]
+                            outputs=[prompt_pre,image,categories_radio,slider,answer,next_image_button,tab2_submit, submit_button,yes_button,no_button]
                         )
 
                         tab2.select(self.on_tab2_clicked, outputs=[tab1, tab2, tabs]) # TODO provide all components that should get an update when Tab2 is clicked
