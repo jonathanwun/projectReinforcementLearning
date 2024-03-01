@@ -24,7 +24,8 @@ default_image_path = './images_training/2.jpg'
 default_explain="Correct Image :\n\nThis image is classified as a correct image since it does not have any of the other five problems we are looking at in a generated face. The image accurately reflects the prompt that we have provided and the facial structure of the man looks realistic."
 default_level="No mistakes"
 default_cat_exp="Generated faces do not suffer from any kind of structural or feature-related problem. Realistic human faces."
-
+height = 576*1.5
+width = 416*1.5
 # Load the CSV file
 df = pd.read_csv('./training_images_log.csv')
 
@@ -141,9 +142,9 @@ def update_prestudy_data():
     
     prompt_prestudy=data_array["prompt"][current_pre_study_index]
 
-    current_picture_label = f"{current_pre_study_index}+1/6"
+    current_picture_label = f"{current_pre_study_index+1}/6"
 
-    img = gr.ImageEditor(img,height=576,width=416, label=current_picture_label)
+    img = gr.ImageEditor(img,height=height,width=width, label=current_picture_label)
     
     if all_images_done:
         return prompt_prestudy, img, gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True), gr.Button(interactive=False),gr.Button(interactive=False), gr.Button(interactive=False)
@@ -193,10 +194,11 @@ def update_data():
     batch_size = len(data_array)
     current_picture_label = gr.Label(str(current_index +1) + "/" + str(batch_size))
     
-
+    df_prompts = pd.read_csv("main_study_image_prompts.csv")
+    prompt = df_prompts[df_prompts['Image']==img_path.split('\\')[1]]['Prompts'].iloc[0]
         
-    img = gr.ImageEditor(img,height=576,width=416, label=str(current_index+1) + "/" + str(batch_size))
-    return img
+    img = gr.ImageEditor(img,height=height,width=width, label=str(current_index+1) + "/" + str(batch_size))
+    return img, prompt
 
 
 def save_rating(radio, slider):
@@ -214,14 +216,16 @@ def save_rating(radio, slider):
     print(len(df['pictures']))
     
     if current_index < len(df['pictures'])-1:
-        img = update_data()
+        img, prompt = update_data()
         finish_button = gr.Button(interactive=False)
     else:
         img = gr.ImageEditor()
-        finish_button = gr.Button(interactive=True)       
+        finish_button = gr.Button(interactive=False)     
+
+     
             
     
-    return img, categories_radio, slider, gr.Button(interactive=False), finish_button
+    return img, prompt, categories_radio, slider, gr.Button(interactive=False), finish_button
 
 def save_no_mistake():
     path = "ratings_" + user + ".csv"
@@ -233,12 +237,13 @@ def save_no_mistake():
     df.to_csv(path, header=True, index=False)
     
     if current_index < len(df['pictures'])-1:
-        img = update_data()
+        img, prompt = update_data()
         finish_button = gr.Button(interactive=False)
     else:
         img = gr.ImageEditor()
-        finish_button = gr.Button(interactive=True)
-    return img, finish_button
+        prompt = gr.Textbox(value="Study finished")
+        finish_button = gr.Button(interactive=False)
+    return img, prompt, finish_button
 
 # TODO load images from PATH
 def dummy_image_loader(path):
@@ -283,7 +288,7 @@ class StudyFramework:
                     with gr.Row(): 
                      with gr.Column():
                             output_text1=gr.Text(label="Prompt", info="Select a category from the 6 radio buttons", value="sleeping face, man, realistic")
-                            output_image=gr.ImageEditor(height=576,width=416,value=default_image_path)
+                            output_image=gr.ImageEditor(height=height,width=width,value=default_image_path)
                      with gr.Column():
                             radio=gr.Radio(choices=category_name,value="Correct Image", label="Category of Mistake",info="Please choose 1 category from the 6 options below")
                             output_text2=gr.Text(label="Short Explanation of Category",value=default_cat_exp)
@@ -318,7 +323,7 @@ class StudyFramework:
                         current_pre_study_index = 0
                         with gr.Column():
                             prompt_pre= gr.Textbox(label="Prompt", value="boy face, realistic, happy")
-                            image = gr.ImageEditor(first_image, height=576,width=416, label= "1/6")
+                            image = gr.ImageEditor(first_image, height=height,width=width, label= "1/6")
 
                         with gr.Column():
                             gr.Markdown(
@@ -398,9 +403,9 @@ class StudyFramework:
                         
                         with gr.Column():
                             
-                            gr.Textbox(label="Prompt", value="this is the prompt")
+                            prompt = gr.Textbox(label="Prompt", value="")
                            #image = gr.ImageEditor(height=576,width=416, label=str(current_index+1) + "/" + str(batch_size))
-                            image = gr.ImageEditor(height=576, width=416, label="1/6")
+                            image = gr.ImageEditor(height=height, width=width, label="1/6")
                     
                         with gr.Column():
                             gr.Markdown(
@@ -439,11 +444,11 @@ class StudyFramework:
                     submit_button.click(
                                 fn=save_rating,
                                 inputs=[categories_radio, slider],
-                                outputs=[image, categories_radio, slider, submit_button, tab3_finish_study]
+                                outputs=[image, prompt, categories_radio, slider, submit_button, tab3_finish_study]
                             )
-                    no_button.click(fn=save_no_mistake, inputs=[], outputs=[image, tab3_finish_study])
+                    no_button.click(fn=save_no_mistake, inputs=[], outputs=[image, prompt, tab3_finish_study])
                     
-                    tab3.select(self.on_tab3_clicked, outputs=[image, tab0, tab1, tab2, tab3, tabs]) # TODO provide all components that should get an update when Tab2 is clicked
+                    tab3.select(self.on_tab3_clicked, outputs=[image, prompt, tab0, tab1, tab2, tab3, tabs]) # TODO provide all components that should get an update when Tab2 is clicked
 
                 ###### FIFTH TAB ###############  
                 with gr.Tab("Fith", interactive=False, visible=False, id=4) as tab4:
@@ -502,7 +507,9 @@ class StudyFramework:
         img_path = data_array['pictures'][0]
         #image = add_border(image)
         image = Image.open(img_path)
-        return image, gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=True, visible=True), gr.Tabs()
+        df_prompts = pd.read_csv("main_study_image_prompts.csv")
+        prompt = df_prompts[df_prompts['Image']==img_path.split('\\')[1]]['Prompts'].iloc[0]
+        return image, prompt, gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=True, visible=True), gr.Tabs()
     
     def on_tab4_clicked(self):
         #time.sleep(2)
@@ -516,7 +523,7 @@ class StudyFramework:
     def launch(self):
         self.app.queue()
         #self.app.launch(server_name="0.0.0.0", server_port=7860) # expose 
-        self.app.launch(share=False)
+        self.app.launch(share=True)
     
 if __name__ == "__main__":
     framework = StudyFramework()
