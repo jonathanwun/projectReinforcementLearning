@@ -141,12 +141,12 @@ def update_prestudy_data():
     
     prompt_prestudy=data_array["prompt"][current_pre_study_index]
 
-    current_picture_label = f"{current_pre_study_index}/6"
+    current_picture_label = f"{current_pre_study_index}+1/6"
 
     img = gr.ImageEditor(img,height=576,width=416, label=current_picture_label)
     
     if all_images_done:
-        return img, gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True), gr.Button(interactive=False),gr.Button(interactive=False), gr.Button(interactive=False)
+        return prompt_prestudy, img, gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True), gr.Button(interactive=False),gr.Button(interactive=False), gr.Button(interactive=False)
     return prompt_prestudy,img, gr.Radio(visible=False,value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=False), gr.Button(interactive=False),gr.Button(), gr.Button()
 
 def show_solution(category, slider):
@@ -505,7 +505,7 @@ class StudyFramework:
         return image, gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=True, visible=True), gr.Tabs()
     
     def on_tab4_clicked(self):
-        time.sleep(2)
+        #time.sleep(2)
         print("Tab 5")
         image = dummy_image_loader("/path/to/image")
         image = add_border(image)
