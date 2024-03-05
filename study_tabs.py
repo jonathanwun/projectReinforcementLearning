@@ -116,7 +116,11 @@ def link_user_to_pics(username):
     print(df_users)
     global image_path
     image_path=df_users['pictures']
-    df_users.to_csv(f"ratings_{username}.csv", index=False)
+
+    user_file_path = Path(f"ratings_{username}.csv")
+
+    if not user_file_path.is_file():
+        df_users.to_csv(f"ratings_{username}.csv", index=False)
     global data_array
     data_array = df_users
     return True
@@ -186,8 +190,12 @@ def update_data():
 
         
     data_array = pd.read_csv("ratings_" + user + ".csv")
+
+    
     global current_index
-    current_index = current_index + 1
+    current_index = (current_index + 1) % len(data_array)
+    print(f"Current index {current_index}")
+    
     img_path = data_array['pictures'][current_index]
     img = Image.open(img_path)
 
@@ -206,26 +214,33 @@ def save_rating(radio, slider):
     path = "ratings_" + user + ".csv"
     df = pd.read_csv(path)
 
+    print(f"Category: {radio}, Level: {slider}")
+    
     df.loc[df['pictures']==image_path[current_index],['Category']] = radio
     df.loc[df['pictures']==image_path[current_index],['Level']] = slider
 
+    print(df)
     categories_radio = gr.Radio(visible=False,value=None)
     slider =  gr.Slider(visible=False,value=None)
 
     df.to_csv(path, header=True, index=False)
-    print(len(df['pictures']))
     
     if current_index < len(df['pictures'])-1:
         img, prompt = update_data()
         finish_button = gr.Button(interactive=False)
+        yes_button = gr.Button()
+        no_button = gr.Button()
     else:
-        img = gr.ImageEditor()
-        finish_button = gr.Button(interactive=False)     
+        img, prompt = update_data()
+        prompt = gr.Textbox(value="Study finished")
+        finish_button = gr.Button(interactive=True)     
+        yes_button = gr.Button(interactive=False)
+        no_button = gr.Button(interactive=False)
 
      
             
     
-    return img, prompt, categories_radio, slider, gr.Button(interactive=False), finish_button
+    return img, prompt, categories_radio, slider, gr.Button(interactive=False), finish_button, yes_button, no_button
 
 def save_no_mistake():
     path = "ratings_" + user + ".csv"
@@ -239,11 +254,16 @@ def save_no_mistake():
     if current_index < len(df['pictures'])-1:
         img, prompt = update_data()
         finish_button = gr.Button(interactive=False)
+        yes_button = gr.Button()
+        no_button = gr.Button()
     else:
-        img = gr.ImageEditor()
+        img, prompt = update_data()
         prompt = gr.Textbox(value="Study finished")
-        finish_button = gr.Button(interactive=False)
-    return img, prompt, finish_button
+        finish_button = gr.Button(interactive=True)
+        yes_button = gr.Button(interactive=False)
+        no_button = gr.Button(interactive=False)
+        
+    return img, prompt, gr.Button(interactive=False), finish_button, yes_button, no_button
 
 # TODO load images from PATH
 def dummy_image_loader(path):
@@ -422,10 +442,11 @@ class StudyFramework:
                         
                             slider = gr.Slider(visible=False)
                     
-                            yes_button.click(display_categories, 
-                            inputs=[],
-                            outputs=[categories_radio, slider]
-                            )
+                            yes_button.click(
+                                        display_categories, 
+                                        inputs=[],
+                                        outputs=[categories_radio, slider]
+                                    )
                     
                             
                             
@@ -444,9 +465,9 @@ class StudyFramework:
                     submit_button.click(
                                 fn=save_rating,
                                 inputs=[categories_radio, slider],
-                                outputs=[image, prompt, categories_radio, slider, submit_button, tab3_finish_study]
+                                outputs=[image, prompt, categories_radio, slider, submit_button, tab3_finish_study, yes_button, no_button]
                             )
-                    no_button.click(fn=save_no_mistake, inputs=[], outputs=[image, prompt, tab3_finish_study])
+                    no_button.click(fn=save_no_mistake, inputs=[], outputs=[image, prompt, submit_button ,tab3_finish_study, yes_button, no_button])
                     
                     tab3.select(self.on_tab3_clicked, outputs=[image, prompt, tab0, tab1, tab2, tab3, tabs]) # TODO provide all components that should get an update when Tab2 is clicked
 
@@ -458,7 +479,7 @@ class StudyFramework:
                                 You can now close the study
                                  """
                                 )
-                    tab4.select(self.on_tab4_clicked, outputs=[tab2, tab3, tab4]) # TODO provide all components that should get an update when Tab2 is clicked
+                    tab4.select(self.on_tab4_clicked, outputs=[tab0, tab1, tab2, tab3, tab4]) # TODO provide all components that should get an update when Tab2 is clicked
 
                 #### EVENT HANDLING ###############
                 tab0_next.click(lambda :gr.Tabs(selected=1), outputs=tabs)
@@ -514,10 +535,9 @@ class StudyFramework:
     def on_tab4_clicked(self):
         #time.sleep(2)
         print("Tab 5")
-        image = dummy_image_loader("/path/to/image")
-        image = add_border(image)
-        #return gr.Tab("First", interactive=False, visible=False, id=0), gr.Tab("Second", interactive=False, visible=False, id=1), gr.Tab("Third", interactive=False, visible=False, id=2), gr.Tab("Fourth", interactive=False, visible=False, id=3), gr.Tab("Fith", interactive=True, visible=True, id=4)
-        return gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=True, visible=True, id=4)
+
+        return gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab("Fifth", interactive=True, visible=True, id=4), gr.Tabs()
+        #return gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=True, visible=True, id=4)
         
     
     def launch(self):
