@@ -21,8 +21,8 @@ def add_border(image):
         
 user = ""
 default_image_path = './images_training/2.jpg'
-default_explain="Correct Image :\n\nThis image is classified as a correct image since it does not have any of the other five problems we are looking at in a generated face. The image accurately reflects the prompt that we have provided and the facial structure of the man looks realistic."
-default_level="No mistakes"
+default_explain="No Errors \n\n This image is classified as an image with no errors since it does not have any of the other five problems we are looking at in AI generated face. The image accurately reflects the prompt that we have provided and the facial structure of the man looks realistic."
+default_level="No errors"
 default_cat_exp="Generated faces do not suffer from any kind of structural or feature-related problem. Realistic human faces."
 height = 576*1.5
 width = 416*1.5
@@ -161,23 +161,23 @@ def show_solution(category, slider):
     print(category)
 
     if category == data_array['category_name'][current_pre_study_index]:
-        answer_text = f"Your selection is correct. Level of Mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection is correct. Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
 
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
     else:
-        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}, Level of Mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}, Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
 
 def show_solution_no_button():
     
     data_array = pd.read_csv("prestudy_log.csv")
 
-    if  (data_array['category_name'][current_pre_study_index] == "Correct Image"):
-        answer_text = f"Your selection is correct. Level of Mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
+    if  (data_array['category_name'][current_pre_study_index] == "No Errors"):
+        answer_text = f"Your selection is correct. Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
 
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
     else:
-        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}, Level of Mistake: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}, Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
 
 # Initial index for displaying the first image
@@ -246,7 +246,7 @@ def save_no_mistake():
     path = "ratings_" + user + ".csv"
     df = pd.read_csv(path)
     
-    df.loc[df['pictures']==image_path[current_index],['Category']] = "Correct Image"
+    df.loc[df['pictures']==image_path[current_index],['Category']] = "No Errors"
     df.loc[df['pictures']==image_path[current_index],['Level']] = 0
 
     df.to_csv(path, header=True, index=False)
@@ -281,7 +281,10 @@ class StudyFramework:
                         gr.Markdown(
                         """
                         # Introduction
-                        Enter a username and press continue to see some examples of images and their categories.
+                        Hello! Welcome to our study on identifying AI image generation errors.
+                        Enter an username and press continue to browse some examples. Also get the hands-on experience of identifying errors. 
+                        
+                        Your insights help improve AI technology. Thank you for your assistance.
                         """)
                         username = gr.Textbox(placeholder="Username", label="Enter any username", max_lines=1)
                         tab0_next = gr.Button(interactive=False, value="Continue")
@@ -294,15 +297,14 @@ class StudyFramework:
                     gr.Markdown(
                     """
                     # Training phase
+
+                    Let's get started.
+                    Let's browse the examples provided and familiarize with the categories of errors that you could encounter.
+                    On the left, the text prompt along with the AI generated image. 
+                    On the right, the categories of errors and explanations.
                     
-                    On the left, we have the text prompt along with the generated image. 
-                    On the right, we have the 6 radio buttons with categories and respective explanations. 
+                    A default category is selected. Please select other categories to see respective examples.  
                     
-                    Currently we can see first radio button 'Correct Image' is selected and an example image with respective text prompt, category explanation and reason for choice of category displayed.
-                    
-                    Please select other radio buttons to see respective examples. 
-                    Thank you.
-                
                     """
                     )
                     with gr.Row(): 
@@ -310,10 +312,10 @@ class StudyFramework:
                             output_text1=gr.Text(label="Prompt", info="Select a category from the 6 radio buttons", value="sleeping face, man, realistic")
                             output_image=gr.ImageEditor(height=height,width=width,value=default_image_path)
                      with gr.Column():
-                            radio=gr.Radio(choices=category_name,value="Correct Image", label="Category of Mistake",info="Please choose 1 category from the 6 options below")
+                            radio=gr.Radio(choices=category_name,value="No Errors", label="Category of Error",info="Please choose 1 category from the 6 options below")
                             output_text2=gr.Text(label="Short Explanation of Category",value=default_cat_exp)
-                            output_text3=gr.Text(label="Reason for Category Choice",info="Why this image belongs to the above selected category",value =default_explain)
-                            output_text4=gr.Text(label="Level of Mistake",value=default_level)
+                            output_text3=gr.Text(label="Reason for Category Choice",info="Why this image belongs to the above selected category",value =default_explain,lines=5)
+                            output_text4=gr.Text(label="Level of Error",value=default_level)
                     with gr.Row():
                         tab1_next = gr.Button("Pre-Study", interactive=False)
                         
@@ -329,12 +331,11 @@ class StudyFramework:
                     gr.Markdown(
                         """
                         # Pre-Study
-                        Now it is your turn. We have 6 images for you to try before moving to Main study.
-                         
-                        If you spot a mistake, then click "YES" and say which category the mistake has and also which degree the mistake has in your opinion.
-                        Then click on "Submit" to view if your answer was correct or wrong. Click on "Next Image" to see the next image. 
-                        
-                        If you don't spot any mistake, click "NO", and the next image apppears.
+
+                        It's your turn to practice. We've prepared 6 images for you to annotate prior to the main study. 
+
+                        Should you notice an error, please select "YES", categorize the error, and provide your assessment of its severity. 
+                        After submitting, you'll receive feedback indicating whether your evaluation was accurate. Proceed to the next image by clicking "Next Image". If no errors are detected, simply click "NO" to proceed to the subsequent image.
                     
                         """)
                     
@@ -348,7 +349,7 @@ class StudyFramework:
                         with gr.Column():
                             gr.Markdown(
                                 """
-                                # Do you spot any Mistake in this picture?
+                                # Do you spot any error in this picture?
                                 """
                             )
                             yes_button = gr.Button("YES")
@@ -358,9 +359,9 @@ class StudyFramework:
                             
                             
                             
-                            categories_radio = gr.Radio(visible=False, label="Mistake Category")
+                            categories_radio = gr.Radio(visible=False, label="Error Category")
                             
-                            slider = gr.Slider(visible=False, label="Level of Mistake")
+                            slider = gr.Slider(visible=False, label="Level of Error")
 
                             submit_button = gr.Button("Submit", interactive=False)
                             
@@ -405,15 +406,17 @@ class StudyFramework:
                     gr.Markdown(
                     """
                     # Main study
-                    Hello! 
-                    We will now look for mistakes in the pictures and categorize them into 5 categories of mistake.
+                    Welcome to the final phase of our study.
+                    We will now display some AI generated images. You will have to categorize them to the respective category of error according to your assessment.
                     
-                    If you spot a mistake, then click "YES" and say which category the mistake has and also which degree the mistake has in your opinion.
-                    Then submit your rating, and the next image appears. 
+                    Should you notice an error, please select "YES", categorize the error, and provide your assessment of its severity.
+                    By clicking on "Submit" the next image will appear.
                     
-                    If you don't spot any mistake, click "NO", and the next image apppears.
+                    If no errors are detected, click on "NO", and the next image apppears.
+                    Thank you for your assitance.
                     
                     Have Fun.
+                   
                     """)
 
                     
@@ -430,7 +433,7 @@ class StudyFramework:
                         with gr.Column():
                             gr.Markdown(
                             """
-                            # Do you spot any Mistake in this picture?
+                            # Do you spot any error in this picture?
                             """
                             )
                             yes_button = gr.Button("YES")
