@@ -536,7 +536,7 @@ class StudyFramework:
         #time.sleep(2)
         print("Tab 5")
 
-        return gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab("Fifth", interactive=True, visible=True, id=4), gr.Tabs()
+        return gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab("Fifth", interactive=True, visible=True, id=4)
         #return gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=True, visible=True, id=4)
         
     
