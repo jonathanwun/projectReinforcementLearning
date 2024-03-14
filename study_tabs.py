@@ -335,7 +335,8 @@ class StudyFramework:
 
                         Should you notice an error, please select "YES", categorize the error, and provide your assessment of its severity. 
                         After submitting, you'll receive feedback indicating whether your evaluation was accurate. Proceed to the next image by clicking "Next Image". If no errors are detected, simply click "NO" to proceed to the subsequent image.
-                    
+
+                        Low number on the slider means low severity, high number means high severity.
                         """)
                     
 
@@ -412,7 +413,7 @@ class StudyFramework:
                     By clicking on "Submit" the next image will appear.
                     
                     If no errors are detected, click on "NO", and the next image apppears.
-                    Thank you for your assitance.
+                    Thank you for your assistance.
                     
                     Have Fun.
                    
