@@ -1,14 +1,16 @@
 batch,username
-<<<<<<< HEAD
-"['sample_images\\school boy face (1).jpg', 'sample_images\\young boy.jpg', 'sample_images\\school girl face (2).jpg', 'sample_images\\school girl face (3).jpg', 'sample_images\\unreal_3.jpg']",sefse
-=======
-"['sample_images\\school boy face (1).jpg', 'sample_images\\young boy.jpg', 'sample_images\\school girl face (2).jpg', 'sample_images\\school girl face (3).jpg', 'sample_images\\unreal_3.jpg']",fghjkl
->>>>>>> 1ecf1a5be88af996a259a83b22f254235710efb8
-"['sample_images\\school girl face (1).jpg', 'sample_images\\school boy face (2).jpg', 'sample_images\\unreal_1.jpg', 'sample_images\\school girl face.jpg', 'sample_images\\unreal_4.jpg']",acdc
-"['sample_images\\young.jpg', 'sample_images\\school boy face.jpg', 'sample_images\\young boy (1).jpg', 'sample_images\\unreal_2.jpg', 'sample_images\\school boy face (3).jpg']",acdc
-"['sample_images\\school girl face (1).jpg', 'sample_images\\unreal_3.jpg', 'sample_images\\unreal_2.jpg', 'sample_images\\young boy.jpg', 'sample_images\\school girl face (2).jpg']",fghjkl
-"['sample_images\\school boy face (1).jpg', 'sample_images\\young boy (1).jpg', 'sample_images\\unreal_1.jpg', 'sample_images\\school girl face.jpg', 'sample_images\\unreal_4.jpg']",Matthias
-"['sample_images\\school boy face (2).jpg', 'sample_images\\school boy face.jpg', 'sample_images\\school boy face (3).jpg', 'sample_images\\young.jpg', 'sample_images\\school girl face (3).jpg']",Matthias
-"['sample_images\\unreal_3.jpg', 'sample_images\\school girl face (3).jpg', 'sample_images\\school boy face (2).jpg', 'sample_images\\school girl face (2).jpg', 'sample_images\\school boy face (3).jpg']",larger
-"['sample_images\\young.jpg', 'sample_images\\unreal_2.jpg', 'sample_images\\school girl face.jpg', 'sample_images\\school boy face.jpg', 'sample_images\\young boy (1).jpg']",fghjk
-"['sample_images\\school boy face (1).jpg', 'sample_images\\school girl face (1).jpg', 'sample_images\\young boy.jpg', 'sample_images\\unreal_1.jpg', 'sample_images\\unreal_4.jpg']",poiuzt
+"['sample_images\\face of a boy with black hair(1).jpg', 'sample_images\\school girl face (3).jpg', 'sample_images\\unreal_1.jpg', 'sample_images\\young boy.jpg', 'sample_images\\school boy face (2).jpg']",hia
+"['sample_images\\young boy (1).jpg', 'sample_images\\school girl face.jpg', 'sample_images\\school girl face (1).jpg', 'sample_images\\face of a man (2).jpg', 'sample_images\\face of a boy with black hair.jpg']",dfghjkl
+"['sample_images\\school boy face.jpg', 'sample_images\\school boy face (3).jpg', 'sample_images\\unreal_4.jpg', 'sample_images\\unreal_2.jpg', 'sample_images\\face of a smiling man.jpg']",dfghjkl
+"['sample_images\\unreal_3.jpg', 'sample_images\\school girl face (2).jpg', 'sample_images\\young.jpg', 'sample_images\\face of a smiling girl with red hair.jpg', 'sample_images\\school boy face (1).jpg']",
+['sample_images\\face of a boy with glasses(1).jpg'],
+"['sample_images\\face of a boy with black hair(1).jpg', 'sample_images\\unreal_1.jpg', 'sample_images\\face of a boy with glasses(1).jpg', 'sample_images\\young boy.jpg', 'sample_images\\unreal_3.jpg']",
+"['sample_images\\school girl face.jpg', 'sample_images\\school boy face.jpg', 'sample_images\\unreal_2.jpg', 'sample_images\\school boy face (3).jpg', 'sample_images\\young.jpg']",
+"['sample_images\\unreal_4.jpg', 'sample_images\\young boy (1).jpg', 'sample_images\\face of a smiling girl with red hair.jpg', 'sample_images\\school girl face (3).jpg', 'sample_images\\face of a man (2).jpg']",
+"['sample_images\\school girl face (1).jpg', 'sample_images\\school girl face (2).jpg', 'sample_images\\school boy face (2).jpg', 'sample_images\\face of a boy with black hair.jpg', 'sample_images\\face of a smiling man.jpg']",
+['sample_images\\school boy face (1).jpg'],
+"['sample_images\\unreal_3.jpg', 'sample_images\\young boy (1).jpg', 'sample_images\\young.jpg', 'sample_images\\school girl face (1).jpg', 'sample_images\\unreal_4.jpg']",
+"['sample_images\\school boy face (2).jpg', 'sample_images\\school boy face (1).jpg', 'sample_images\\face of a man (2).jpg', 'sample_images\\face of a boy with black hair.jpg', 'sample_images\\face of a smiling man.jpg']",
+"['sample_images\\young boy.jpg', 'sample_images\\face of a boy with black hair(1).jpg', 'sample_images\\unreal_1.jpg', 'sample_images\\school girl face (2).jpg', 'sample_images\\unreal_2.jpg']",
+"['sample_images\\school girl face (3).jpg', 'sample_images\\school boy face (3).jpg', 'sample_images\\school boy face.jpg', 'sample_images\\face of a boy with glasses(1).jpg', 'sample_images\\face of a smiling girl with red hair.jpg']",
+['sample_images\\school girl face.jpg'],

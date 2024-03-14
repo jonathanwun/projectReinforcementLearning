@@ -145,7 +145,6 @@ def update_prestudy_data():
     img = Image.open(img_path)
     
     prompt_prestudy=data_array["prompt"][current_pre_study_index]
-
     current_picture_label = f"{current_pre_study_index+1}/6"
 
     img = gr.ImageEditor(img,height=height,width=width, label=current_picture_label)
@@ -161,11 +160,11 @@ def show_solution(category, slider):
     print(category)
 
     if category == data_array['category_name'][current_pre_study_index]:
-        answer_text = f"Your selection is correct. Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection is correct.\nExplanation: {data_array['explanation'][current_pre_study_index]}\nLevel of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
 
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
     else:
-        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}, Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection was wrong.\nExplanation: {data_array['explanation'][current_pre_study_index]}\nLevel of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
 
 def show_solution_no_button():
@@ -173,11 +172,11 @@ def show_solution_no_button():
     data_array = pd.read_csv("prestudy_log.csv")
 
     if  (data_array['category_name'][current_pre_study_index] == "No Errors"):
-        answer_text = f"Your selection is correct. Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection is correct."
 
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
     else:
-        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}, Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection was wrong.\nExplanation: {data_array['explanation'][current_pre_study_index]}\nLevel of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
 
 # Initial index for displaying the first image
