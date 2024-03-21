@@ -164,7 +164,7 @@ def show_solution(category, slider):
 
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
     else:
-        answer_text = f"Your selection was wrong.\nExplanation: {data_array['explanation'][current_pre_study_index]}\nLevel of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}\n Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}\n\n Explanation: {data_array['explanation'][current_pre_study_index]}"
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
 
 def show_solution_no_button():
@@ -176,7 +176,7 @@ def show_solution_no_button():
 
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
     else:
-        answer_text = f"Your selection was wrong.\nExplanation: {data_array['explanation'][current_pre_study_index]}\nLevel of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}\n Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}\n\n Explanation: {data_array['explanation'][current_pre_study_index]}"
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
 
 # Initial index for displaying the first image
@@ -375,7 +375,7 @@ class StudyFramework:
                             
                             answer_text=""
                             
-                            answer = gr.Text(value=answer_text, label="Correct Answer", visible=False)
+                            answer = gr.Text(value=answer_text, label="Solution", visible=False)
                             next_image_button = gr.Button("Next Image",visible=False)
 
                             
