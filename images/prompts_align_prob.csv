@@ -1,7 +1,0 @@
-prompt;Image;
-"human face ,realistic";"""C:\RL_Project\projectReinforcementLearning\images\alignment_problems\ap_1.jpg""";
-"young boy face, realistic";"""C:\RL_Project\projectReinforcementLearning\images\alignment_problems\ap_2.jpg""";
-"young,realistic male face";"""C:\RL_Project\projectReinforcementLearning\images\alignment_problems\ap_3.jpg""";
-;"""C:\RL_Project\projectReinforcementLearning\images\alignment_problems\ap_4.jpg""";
-"female face, realistic,light on face";"""C:\RL_Project\projectReinforcementLearning\images\alignment_problems\ap_5.jpg""";
-"realistic, male face with big ears";"""C:\RL_Project\projectReinforcementLearning\images\alignment_problems\ap_6.jpg""";misaligned nose

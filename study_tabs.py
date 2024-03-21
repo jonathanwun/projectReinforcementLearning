@@ -20,6 +20,7 @@ def add_border(image):
         return new_image
         
 user = ""
+ratings_path = "ratings/"
 default_image_path = './images_training/2.jpg'
 default_explain="No Errors \n\n This image is classified as an image with no errors since it does not have any of the other five problems we are looking at in AI generated face. The image accurately reflects the prompt that we have provided and the facial structure of the man looks realistic."
 default_level="No errors"
@@ -113,14 +114,14 @@ def link_user_to_pics(username):
     df_users['Level'] = None
     global default_image
     default_image = gr.Image(df_users['username'][0])
-    print(df_users)
+    #print(df_users)
     global image_path
     image_path=df_users['pictures']
 
-    user_file_path = Path(f"ratings_{username}.csv")
+    user_file_path = Path(f"{ratings_path}ratings_{username}.csv")
 
     if not user_file_path.is_file():
-        df_users.to_csv(f"ratings_{username}.csv", index=False)
+        df_users.to_csv(f"{ratings_path}ratings_{username}.csv", index=False)
     global data_array
     data_array = df_users
     return True
@@ -140,7 +141,7 @@ def update_prestudy_data():
     
     all_images_done = current_pre_study_index >= 5
     current_pre_study_index = (current_pre_study_index + 1) % len(data_array)
-    print(current_pre_study_index)
+    #print(current_pre_study_index)
     img_path = data_array['image_path'][current_pre_study_index]#, data_array[current_index]["category"]
     img = Image.open(img_path)
     
@@ -157,7 +158,7 @@ def show_solution(category, slider):
     
     data_array = pd.read_csv("prestudy_log.csv")
 
-    print(category)
+    #print(category)
 
     if category == data_array['category_name'][current_pre_study_index]:
         answer_text = f"Your selection is correct.\nExplanation: {data_array['explanation'][current_pre_study_index]}\nLevel of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
@@ -188,12 +189,12 @@ reached_end = False
 def update_data():
 
         
-    data_array = pd.read_csv("ratings_" + user + ".csv")
+    data_array = pd.read_csv(f"{ratings_path}ratings_{user}.csv")
 
     
     global current_index
     current_index = (current_index + 1) % len(data_array)
-    print(f"Current index {current_index}")
+    #print(f"Current index {current_index}")
     
     img_path = data_array['pictures'][current_index]
     img = Image.open(img_path)
@@ -210,15 +211,15 @@ def update_data():
 
 def save_rating(radio, slider):
 
-    path = "ratings_" + user + ".csv"
+    path = ratings_path + "ratings_" + user + ".csv"
     df = pd.read_csv(path)
 
-    print(f"Category: {radio}, Level: {slider}")
+    #print(f"Category: {radio}, Level: {slider}")
     
     df.loc[df['pictures']==image_path[current_index],['Category']] = radio
     df.loc[df['pictures']==image_path[current_index],['Level']] = slider
 
-    print(df)
+    #print(df)
     categories_radio = gr.Radio(visible=False,value=None)
     slider =  gr.Slider(visible=False,value=None)
 
@@ -242,7 +243,7 @@ def save_rating(radio, slider):
     return img, prompt, categories_radio, slider, gr.Button(interactive=False), finish_button, yes_button, no_button
 
 def save_no_mistake():
-    path = "ratings_" + user + ".csv"
+    path = ratings_path + "ratings_" + user + ".csv"
     df = pd.read_csv(path)
     
     df.loc[df['pictures']==image_path[current_index],['Category']] = "No Errors"
@@ -526,7 +527,7 @@ class StudyFramework:
     def on_tab3_clicked(self):
         print("tab3 clicked")
         # TODO update all components in tab2
-        path = f"ratings_" + str(user) + ".csv"
+        path = f"{ratings_path}ratings_" + str(user) + ".csv"
         data_array = pd.read_csv(path)
         img_path = data_array['pictures'][0]
         #image = add_border(image)
