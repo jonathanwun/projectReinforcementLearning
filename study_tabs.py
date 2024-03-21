@@ -145,7 +145,6 @@ def update_prestudy_data():
     img = Image.open(img_path)
     
     prompt_prestudy=data_array["prompt"][current_pre_study_index]
-
     current_picture_label = f"{current_pre_study_index+1}/6"
 
     img = gr.ImageEditor(img,height=height,width=width, label=current_picture_label)
@@ -161,7 +160,7 @@ def show_solution(category, slider):
     print(category)
 
     if category == data_array['category_name'][current_pre_study_index]:
-        answer_text = f"Your selection is correct. Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection is correct.\nExplanation: {data_array['explanation'][current_pre_study_index]}\nLevel of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
 
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
     else:
@@ -173,7 +172,7 @@ def show_solution_no_button():
     data_array = pd.read_csv("prestudy_log.csv")
 
     if  (data_array['category_name'][current_pre_study_index] == "No Errors"):
-        answer_text = f"Your selection is correct. Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
+        answer_text = f"Your selection is correct."
 
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
     else:
@@ -336,7 +335,8 @@ class StudyFramework:
 
                         Should you notice an error, please select "YES", categorize the error, and provide your assessment of its severity. 
                         After submitting, you'll receive feedback indicating whether your evaluation was accurate. Proceed to the next image by clicking "Next Image". If no errors are detected, simply click "NO" to proceed to the subsequent image.
-                    
+
+                        Low number on the slider means low severity, high number means high severity.
                         """)
                     
 
@@ -413,7 +413,7 @@ class StudyFramework:
                     By clicking on "Submit" the next image will appear.
                     
                     If no errors are detected, click on "NO", and the next image apppears.
-                    Thank you for your assitance.
+                    Thank you for your assistance.
                     
                     Have Fun.
                    
@@ -539,7 +539,7 @@ class StudyFramework:
         #time.sleep(2)
         print("Tab 5")
 
-        return gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab("Fifth", interactive=True, visible=True, id=4), gr.Tabs()
+        return gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab("Fifth", interactive=True, visible=True, id=4)
         #return gr.Tab(interactive=False, visible=False), gr.Tab(interactive=False, visible=False), gr.Tab(interactive=True, visible=True, id=4)
         
     
