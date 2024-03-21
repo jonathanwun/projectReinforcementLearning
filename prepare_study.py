@@ -33,8 +33,8 @@ def generate_batches_from_folder(folder_path, batch_size):
     batch_paths = [[os.path.join(folder_path, image) for image in batch] for batch in batches]
     return batch_paths
 
-folder_path = 'sample_images'
-batch_size = 5
+folder_path = 'alpha_study_60_img'
+batch_size = 20
 result = generate_batches_from_folder(folder_path, batch_size)
 df_batches = pd.DataFrame()
 df_batches['batch'] = result
