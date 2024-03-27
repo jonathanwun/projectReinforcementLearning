@@ -19,7 +19,6 @@ def add_border(image):
         new_image.paste(image, ((h-w) // 2, 0))
         return new_image
         
-user = ""
 ratings_path = "ratings/"
 default_image_path = './images_training/2.jpg'
 default_explain="No Errors \n\n This image is classified as an image with no errors since it does not have any of the other five problems we are looking at in AI generated face. The image accurately reflects the prompt that we have provided and the facial structure of the man looks realistic."
@@ -90,9 +89,6 @@ category_name = df['category_name'].unique().tolist()
 
 
 def next_page(username):
-    global nxt_page
-    global user
-    user = username
     if (len(username)>0) & (len(username)<12):
         nxt_page = True
         return gr.Button(interactive=True)
@@ -133,14 +129,12 @@ def display_categories():
     
     return categories_radio, slider
 
-current_pre_study_index = 0
-def update_prestudy_data():
+def update_prestudy_data(index):
     
     data_array = pd.read_csv("prestudy_log.csv")
-    global current_pre_study_index
     
-    all_images_done = current_pre_study_index >= 5
-    current_pre_study_index = (current_pre_study_index + 1) % len(data_array)
+    all_images_done = index >= 5
+    current_pre_study_index = (index + 1) % len(data_array)
     #print(current_pre_study_index)
     img_path = data_array['image_path'][current_pre_study_index]#, data_array[current_index]["category"]
     img = Image.open(img_path)
@@ -151,10 +145,10 @@ def update_prestudy_data():
     img = gr.ImageEditor(img,height=height,width=width, label=current_picture_label)
     
     if all_images_done:
-        return prompt_prestudy, img, gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True), gr.Button(interactive=False),gr.Button(interactive=False), gr.Button(interactive=False)
-    return prompt_prestudy,img, gr.Radio(visible=False,value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=False), gr.Button(interactive=False),gr.Button(), gr.Button()
+        return prompt_prestudy, img, gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True), gr.Button(interactive=False),gr.Button(interactive=False), gr.Button(interactive=False), current_pre_study_index
+    return prompt_prestudy,img, gr.Radio(visible=False,value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=False), gr.Button(interactive=False),gr.Button(), gr.Button(), current_pre_study_index
 
-def show_solution(category, slider):
+def show_solution(category, slider, current_pre_study_index):
     
     data_array = pd.read_csv("prestudy_log.csv")
 
@@ -168,7 +162,7 @@ def show_solution(category, slider):
         answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}\n Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}\n\n Explanation: {data_array['explanation'][current_pre_study_index]}"
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
 
-def show_solution_no_button():
+def show_solution_no_button(current_pre_study_index):
     
     data_array = pd.read_csv("prestudy_log.csv")
 
@@ -180,36 +174,33 @@ def show_solution_no_button():
         answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}\n Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}\n\n Explanation: {data_array['explanation'][current_pre_study_index]}"
         return gr.Text(answer_text, visible=True), gr.Button(visible=True)
 
-# Initial index for displaying the first image
-current_index = 0
+
 # Boolean which indicates if all pictures were displayed
 reached_end = False
 # Function to update the displayed image and category
 
-def update_data():
+def update_data(current_index, user):
 
         
     data_array = pd.read_csv(f"{ratings_path}ratings_{user}.csv")
 
-    
-    global current_index
-    current_index = (current_index + 1) % len(data_array)
+    current_index_var = (current_index + 1) % len(data_array)
     #print(f"Current index {current_index}")
     
-    img_path = data_array['pictures'][current_index]
+    img_path = data_array['pictures'][current_index_var]
     img = Image.open(img_path)
 
     batch_size = len(data_array)
-    current_picture_label = gr.Label(str(current_index +1) + "/" + str(batch_size))
+    current_picture_label = gr.Label(str(current_index_var +1) + "/" + str(batch_size))
     
     df_prompts = pd.read_csv("main_study_image_prompts.csv")
     prompt = df_prompts[df_prompts['Image']==img_path.split('\\')[1]]['Prompts'].iloc[0]
         
-    img = gr.ImageEditor(img,height=height,width=width, label=str(current_index+1) + "/" + str(batch_size))
-    return img, prompt
+    img = gr.ImageEditor(img,height=height,width=width, label=str(current_index_var+1) + "/" + str(batch_size))
+    return img, prompt, current_index_var
 
 
-def save_rating(radio, slider):
+def save_rating(radio, slider, user, current_index):
 
     path = ratings_path + "ratings_" + user + ".csv"
     df = pd.read_csv(path)
@@ -226,12 +217,12 @@ def save_rating(radio, slider):
     df.to_csv(path, header=True, index=False)
     
     if current_index < len(df['pictures'])-1:
-        img, prompt = update_data()
+        img, prompt, current_index_var = update_data(current_index, user)
         finish_button = gr.Button(interactive=False)
         yes_button = gr.Button()
         no_button = gr.Button()
     else:
-        img, prompt = update_data()
+        img, prompt, current_index_var = update_data(current_index, user)
         prompt = gr.Textbox(value="Study finished")
         finish_button = gr.Button(interactive=True)     
         yes_button = gr.Button(interactive=False)
@@ -240,10 +231,11 @@ def save_rating(radio, slider):
      
             
     
-    return img, prompt, categories_radio, slider, gr.Button(interactive=False), finish_button, yes_button, no_button
+    return img, prompt, categories_radio, slider, gr.Button(interactive=False), finish_button, yes_button, no_button, current_index_var
 
-def save_no_mistake():
-    path = ratings_path + "ratings_" + user + ".csv"
+def save_no_mistake(user, current_index):
+    print(user)
+    path = f"{ratings_path}ratings_{user}.csv"
     df = pd.read_csv(path)
     
     df.loc[df['pictures']==image_path[current_index],['Category']] = "No Errors"
@@ -252,18 +244,18 @@ def save_no_mistake():
     df.to_csv(path, header=True, index=False)
     
     if current_index < len(df['pictures'])-1:
-        img, prompt = update_data()
+        img, prompt, current_index_var = update_data(current_index, user)
         finish_button = gr.Button(interactive=False)
         yes_button = gr.Button()
         no_button = gr.Button()
     else:
-        img, prompt = update_data()
+        img, prompt, current_index_var = update_data(current_index, user)
         prompt = gr.Textbox(value="Study finished")
         finish_button = gr.Button(interactive=True)
         yes_button = gr.Button(interactive=False)
         no_button = gr.Button(interactive=False)
         
-    return img, prompt, gr.Button(interactive=False), finish_button, yes_button, no_button
+    return img, prompt, gr.Button(interactive=False), finish_button, yes_button, no_button, current_index_var
 
 # TODO load images from PATH
 def dummy_image_loader(path):
@@ -273,6 +265,8 @@ def dummy_image_loader(path):
 class StudyFramework:    
     def __init__(self) -> None:
         with gr.Blocks() as self.app:
+            user = gr.State()
+            print(user.value)
             with gr.Tabs() as tabs:
                 ###### FIRST TAB ###############
                 with gr.Tab("First", id=0) as tab0:
@@ -294,6 +288,7 @@ class StudyFramework:
                     
                 ###### SECOND TAB ###############
                 with gr.Tab("Second", interactive=False, id=1) as tab1:
+                    print(user.value)
                     gr.Markdown(
                     """
                     # Training phase
@@ -320,7 +315,7 @@ class StudyFramework:
                         tab1_next = gr.Button("Pre-Study", interactive=False)
                         
                     radio.change(fn=show_image, inputs=radio, outputs=[output_text1,output_image,output_text2,output_text3,output_text4, tab1_next])
-                    tab1.select(self.on_tab1_clicked, outputs=[tab0, tab1, tabs]) # TODO provide all components that should get an update when Tab1 is clicked
+                    tab1.select(self.on_tab1_clicked, inputs=[user], outputs=[tab0, tab1, tabs]) # TODO provide all components that should get an update when Tab1 is clicked
                     
                     
                     
@@ -342,7 +337,7 @@ class StudyFramework:
                     
 
                     with gr.Row():
-                        current_pre_study_index = 0
+                        current_pre_study_index_var = gr.State(0)
                         with gr.Column():
                             prompt_pre= gr.Textbox(label="Prompt", value="boy face, realistic, happy")
                             image = gr.ImageEditor(first_image, height=height,width=width, label= "1/6")
@@ -380,12 +375,12 @@ class StudyFramework:
                             next_image_button = gr.Button("Next Image",visible=False)
 
                             
-                            no_button.click(fn=show_solution_no_button, inputs=[], outputs=[answer, next_image_button])
+                            no_button.click(fn=show_solution_no_button, inputs=[current_pre_study_index_var], outputs=[answer, next_image_button])
                     
                 
                             submit_button.click(
                                 fn=show_solution,
-                                inputs=[categories_radio, slider],
+                                inputs=[categories_radio, slider, current_pre_study_index_var],
                                 outputs=[answer, next_image_button]
                             )
                     with gr.Row():
@@ -394,8 +389,8 @@ class StudyFramework:
                             
                         next_image_button.click(
                             fn=update_prestudy_data,
-                            inputs=[],
-                            outputs=[prompt_pre,image,categories_radio,slider,answer,next_image_button,tab2_submit, submit_button,yes_button,no_button]
+                            inputs=[current_pre_study_index_var],
+                            outputs=[prompt_pre,image,categories_radio,slider,answer,next_image_button,tab2_submit, submit_button,yes_button,no_button, current_pre_study_index_var]
                         )
 
                         tab2.select(self.on_tab2_clicked, outputs=[tab1, tab2, tabs]) # TODO provide all components that should get an update when Tab2 is clicked
@@ -404,6 +399,7 @@ class StudyFramework:
                     
                 ###### FOURTH TAB ###############  
                 with gr.Tab("Fourth", interactive=False, visible=False, id=3) as tab3:
+                    current_index_var = gr.State(0)
                     gr.Markdown(
                     """
                     # Main study
@@ -429,7 +425,7 @@ class StudyFramework:
                             
                             prompt = gr.Textbox(label="Prompt", value="")
                            #image = gr.ImageEditor(height=576,width=416, label=str(current_index+1) + "/" + str(batch_size))
-                            image = gr.ImageEditor(height=height, width=width, label="1/6")
+                            image = gr.ImageEditor(height=height, width=width, label=f"1/20")
                     
                         with gr.Column():
                             gr.Markdown(
@@ -468,10 +464,10 @@ class StudyFramework:
                         
                     submit_button.click(
                                 fn=save_rating,
-                                inputs=[categories_radio, slider],
-                                outputs=[image, prompt, categories_radio, slider, submit_button, tab3_finish_study, yes_button, no_button]
+                                inputs=[categories_radio, slider, current_index_var, user],
+                                outputs=[image, prompt, categories_radio, slider, submit_button, tab3_finish_study, yes_button, no_button, current_index_var]
                             )
-                    no_button.click(fn=save_no_mistake, inputs=[], outputs=[image, prompt, submit_button ,tab3_finish_study, yes_button, no_button])
+                    no_button.click(fn=save_no_mistake, inputs=[current_index_var, user], outputs=[image, prompt, submit_button ,tab3_finish_study, yes_button, no_button, current_index_var])
                     
                     tab3.select(self.on_tab3_clicked, outputs=[image, prompt, tab0, tab1, tab2, tab3, tabs]) # TODO provide all components that should get an update when Tab2 is clicked
 
@@ -486,7 +482,7 @@ class StudyFramework:
                     tab4.select(self.on_tab4_clicked, outputs=[tab0, tab1, tab2, tab3, tab4]) # TODO provide all components that should get an update when Tab2 is clicked
 
                 #### EVENT HANDLING ###############
-                tab0_next.click(lambda :gr.Tabs(selected=1), outputs=tabs)
+                tab0_next.click(lambda :(gr.Tabs(selected=1), gr.State(username.value)), outputs=[tabs, user])
                 tab1_next.click(lambda :gr.Tabs(selected=2), outputs=tabs)
                 # tab1_prev.click(lambda :gr.Tabs(selected=0), outputs=tabs)
                 tab2_prev.click(lambda :gr.Tabs(selected=1), outputs=tabs)
@@ -509,9 +505,9 @@ class StudyFramework:
         print("tab0 clicked")
         return gr.Tab("First", interactive=True, id=0)
     
-    def on_tab1_clicked(self):
-        print("tab1 clicked")
-        link_user_to_pics(user)
+    def on_tab1_clicked(self, user):
+        print("tab1 clicked", user.value)
+        link_user_to_pics(user.value)
         # TODO update all components in tab1
         image = dummy_image_loader("/path/to/image")
         image = add_border(image)
