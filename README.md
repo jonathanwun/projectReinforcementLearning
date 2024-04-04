@@ -1,4 +1,4 @@
-AI-Generated Faces Review Project
+# AI-Generated Faces Review Project
 ## Description
 
 This project aims to utilize the power of human perception in identifying and categorizing errors in AI-generated facial images. By making use of the human reviews, this project aims to improve the quality and realism of AI-generated faces, addressing common issues such as unrealistic features, artifacts, and inconsistencies that AI-based tools might overlook.
@@ -20,6 +20,10 @@ cd projectReinforcementLearning
 python -m venv rlproject 
 
 To activate the environment : rlproject/Scripts/activate
+
+4. Installing the dependencies :
+
+   pip install -r requirements.txt
 
 ## Running the application :
 
