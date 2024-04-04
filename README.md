@@ -5,6 +5,8 @@ This project aims to utilize the power of human perception in identifying and ca
 
 ## Installation
 
+For the latest stable version, clone the `main` branch.
+
 For installing the project :
 
 1. Clone this repository to your local machine:
