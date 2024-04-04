@@ -21,7 +21,7 @@ cd projectReinforcementLearning
    
 python -m venv rlproject 
 
-To activate the environment : rlproject/Scripts/activate
+To activate the environment : rlproject\Scripts\activate
 
 4. Installing the dependencies :
 
