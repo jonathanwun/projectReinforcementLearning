@@ -201,7 +201,7 @@ def update_data(current_index, user):
     return img, prompt, current_index_var
 
 
-def save_rating(radio, slider, user, current_index):
+def save_rating(radio, slider, current_index, user):
 
     path = ratings_path + "ratings_" + user.value + ".csv"
     df = pd.read_csv(path)
@@ -234,7 +234,7 @@ def save_rating(radio, slider, user, current_index):
     
     return img, prompt, categories_radio, slider, gr.Button(interactive=False), finish_button, yes_button, no_button, current_index_var
 
-def save_no_mistake(user, current_index):
+def save_no_mistake(current_index, user):
     print(user)
     path = f"{ratings_path}ratings_{user.value}.csv"
     df = pd.read_csv(path)
