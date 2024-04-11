@@ -235,7 +235,6 @@ def save_rating(radio, slider, current_index, user):
     return img, prompt, categories_radio, slider, gr.Button(interactive=False), finish_button, yes_button, no_button, current_index_var
 
 def save_no_mistake(current_index, user):
-    print(user)
     path = f"{ratings_path}ratings_{user.value}.csv"
     df = pd.read_csv(path)
     
@@ -245,7 +244,7 @@ def save_no_mistake(current_index, user):
     df.to_csv(path, header=True, index=False)
     
     if current_index < len(df['pictures'])-1:
-        img, prompt, current_index_var = update_data(current_index, user)
+        img, prompt, current_index_var = update_data(current_index, user.value)
         finish_button = gr.Button(interactive=False)
         yes_button = gr.Button()
         no_button = gr.Button()
@@ -271,7 +270,6 @@ class StudyFramework:
                 ###### FIRST TAB ###############
                 with gr.Tab("First", id=0) as tab0:
                     user = gr.State()
-                    print(user.value)
                     with gr.Blocks() as introduction:
     
                         gr.Markdown(
@@ -290,7 +288,6 @@ class StudyFramework:
                     
                 ###### SECOND TAB ###############
                 with gr.Tab("Second", interactive=False, id=1) as tab1:
-                    print(user.value)
                     gr.Markdown(
                     """
                     # Training phase
@@ -323,7 +320,6 @@ class StudyFramework:
                     
                 ###### THIRD TAB ###############
                 with gr.Tab("Third", visible=True, interactive=False, id=2) as tab2:
-                    print(user.value)
                     data_array = pd.read_csv("prestudy_log.csv")
                     first_image = Image.open(data_array['image_path'][0])
                     gr.Markdown(
@@ -402,7 +398,6 @@ class StudyFramework:
                     
                 ###### FOURTH TAB ###############  
                 with gr.Tab("Fourth", interactive=False, visible=False, id=3) as tab3:
-                    print(user.value)
                     current_index_var = gr.State(0)
                     gr.Markdown(
                     """
