@@ -544,8 +544,8 @@ class StudyFramework:
     
     def launch(self):
         self.app.queue()
-        #self.app.launch(server_name="0.0.0.0", server_port=7860) # expose 
-        self.app.launch(share=True)
+        self.app.launch(server_name="0.0.0.0", server_port=1342) # expose 
+        #self.app.launch(share=True)
     
 if __name__ == "__main__":
     framework = StudyFramework()
