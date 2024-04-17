@@ -1,0 +1,181 @@
+pictures,username,Category,Level
+alpha_study_60_img\realistic (5).jpg,max,Unrealistic,5.0
+alpha_study_60_img\female face (1).jpg,max,Unrealistic,3.0
+alpha_study_60_img\realistic face (1).jpg,max,Unrealistic,4.0
+alpha_study_60_img\child.jpg,max,Number of Features,5.0
+alpha_study_60_img\realistic (22).jpg,max,No Errors,0.0
+alpha_study_60_img\realistic face.jpg,max,No Errors,0.0
+alpha_study_60_img\female face(3).jpg,max,Alignment Problem,1.0
+alpha_study_60_img\ap_4.jpg,max,Number of Features,3.0
+alpha_study_60_img\face of a man with a tattoo3.jpg,max,Incorrect Proportion,2.0
+alpha_study_60_img\face of a woman (7).jpg,max,No Errors,0.0
+alpha_study_60_img\face of a smiling child(2).jpg,max,Unrealistic,4.0
+alpha_study_60_img\face of an old man with beard (3).jpg,max,Unrealistic,3.0
+alpha_study_60_img\realistic face of a young girl (3).jpg,max,Unrealistic,2.0
+alpha_study_60_img\face of a girl with glasses(2).jpg,max,No Errors,0.0
+alpha_study_60_img\female nose(12).jpg,max,Unrealistic,3.0
+alpha_study_60_img\face of a sleeping boy(1).jpg,max,Number of Features,5.0
+alpha_study_60_img\pp_1.jpg,max,Unrealistic,3.0
+alpha_study_60_img\face of a young# girl with a tattoo (3).jpg,max,Unrealistic,2.0
+alpha_study_60_img\correct_3.jpg,max,No Errors,0.0
+alpha_study_60_img\realistic face (47).jpg,max,Wrong Aspect,2.0
+alpha_study_60_img\realistic (5).jpg,Tobias_K,Unrealistic,3.0
+alpha_study_60_img\female face (1).jpg,Tobias_K,Unrealistic,3.0
+alpha_study_60_img\realistic face (1).jpg,Tobias_K,Unrealistic,4.0
+alpha_study_60_img\child.jpg,Tobias_K,Number of Features,5.0
+alpha_study_60_img\realistic (22).jpg,Tobias_K,No Errors,0.0
+alpha_study_60_img\realistic face.jpg,Tobias_K,No Errors,0.0
+alpha_study_60_img\female face(3).jpg,Tobias_K,No Errors,0.0
+alpha_study_60_img\ap_4.jpg,Tobias_K,Unrealistic,1.0
+alpha_study_60_img\face of a man with a tattoo3.jpg,Tobias_K,No Errors,0.0
+alpha_study_60_img\face of a woman (7).jpg,Tobias_K,No Errors,0.0
+alpha_study_60_img\face of a smiling child(2).jpg,Tobias_K,No Errors,0.0
+alpha_study_60_img\face of an old man with beard (3).jpg,Tobias_K,Unrealistic,3.0
+alpha_study_60_img\realistic face of a young girl (3).jpg,Tobias_K,Unrealistic,2.0
+alpha_study_60_img\face of a girl with glasses(2).jpg,Tobias_K,No Errors,0.0
+alpha_study_60_img\female nose(12).jpg,Tobias_K,Wrong Aspect,3.0
+alpha_study_60_img\face of a sleeping boy(1).jpg,Tobias_K,Number of Features,3.0
+alpha_study_60_img\pp_1.jpg,Tobias_K,Unrealistic,2.0
+alpha_study_60_img\face of a young# girl with a tattoo (3).jpg,Tobias_K,Unrealistic,2.0
+alpha_study_60_img\correct_3.jpg,Tobias_K,No Errors,0.0
+alpha_study_60_img\realistic face (47).jpg,Tobias_K,No Errors,0.0
+alpha_study_60_img\realistic (5).jpg,Abhi,Alignment Problem,1.0
+alpha_study_60_img\female face (1).jpg,Abhi,Alignment Problem,0.0
+alpha_study_60_img\realistic face (1).jpg,Abhi,Alignment Problem,1.0
+alpha_study_60_img\child.jpg,Abhi,Number of Features,3.0
+alpha_study_60_img\realistic (22).jpg,Abhi,No Errors,0.0
+alpha_study_60_img\realistic face.jpg,Abhi,No Errors,0.0
+alpha_study_60_img\female face(3).jpg,Abhi,No Errors,0.0
+alpha_study_60_img\ap_4.jpg,Abhi,No Errors,0.0
+alpha_study_60_img\face of a man with a tattoo3.jpg,Abhi,No Errors,0.0
+alpha_study_60_img\face of a woman (7).jpg,Abhi,No Errors,0.0
+alpha_study_60_img\face of a smiling child(2).jpg,Abhi,No Errors,0.0
+alpha_study_60_img\face of an old man with beard (3).jpg,Abhi,Alignment Problem,1.0
+alpha_study_60_img\realistic face of a young girl (3).jpg,Abhi,No Errors,0.0
+alpha_study_60_img\face of a girl with glasses(2).jpg,Abhi,Alignment Problem,1.0
+alpha_study_60_img\female nose(12).jpg,Abhi,Unrealistic,2.0
+alpha_study_60_img\face of a sleeping boy(1).jpg,Abhi,Number of Features,2.0
+alpha_study_60_img\pp_1.jpg,Abhi,Unrealistic,3.0
+alpha_study_60_img\face of a young# girl with a tattoo (3).jpg,Abhi,Number of Features,2.0
+alpha_study_60_img\correct_3.jpg,Abhi,No Errors,0.0
+alpha_study_60_img\realistic face (47).jpg,Abhi,No Errors,0.0
+alpha_study_60_img\realistic (5).jpg,Josy,Unrealistic,3.0
+alpha_study_60_img\female face (1).jpg,Josy,Unrealistic,3.0
+alpha_study_60_img\realistic face (1).jpg,Josy,Unrealistic,4.0
+alpha_study_60_img\child.jpg,Josy,Number of Features,5.0
+alpha_study_60_img\realistic (22).jpg,Josy,No Errors,0.0
+alpha_study_60_img\realistic face.jpg,Josy,No Errors,0.0
+alpha_study_60_img\female face(3).jpg,Josy,No Errors,0.0
+alpha_study_60_img\ap_4.jpg,Josy,Unrealistic,1.0
+alpha_study_60_img\face of a man with a tattoo3.jpg,Josy,Wrong Aspect,0.0
+alpha_study_60_img\face of a woman (7).jpg,Josy,No Errors,0.0
+alpha_study_60_img\face of a smiling child(2).jpg,Josy,Unrealistic,2.0
+alpha_study_60_img\face of an old man with beard (3).jpg,Josy,Unrealistic,2.0
+alpha_study_60_img\realistic face of a young girl (3).jpg,Josy,Unrealistic,3.0
+alpha_study_60_img\face of a girl with glasses(2).jpg,Josy,No Errors,0.0
+alpha_study_60_img\female nose(12).jpg,Josy,Alignment Problem,2.0
+alpha_study_60_img\face of a sleeping boy(1).jpg,Josy,Number of Features,3.0
+alpha_study_60_img\pp_1.jpg,Josy,Unrealistic,1.0
+alpha_study_60_img\face of a young# girl with a tattoo (3).jpg,Josy,Unrealistic,1.0
+alpha_study_60_img\correct_3.jpg,Josy,No Errors,0.0
+alpha_study_60_img\realistic face (47).jpg,Josy,Wrong Aspect,2.0
+alpha_study_60_img\realistic (5).jpg,sohini,Unrealistic,3.0
+alpha_study_60_img\female face (1).jpg,sohini,Incorrect Proportion,3.0
+alpha_study_60_img\realistic face (1).jpg,sohini,No Errors,0.0
+alpha_study_60_img\child.jpg,sohini,Number of Features,3.0
+alpha_study_60_img\realistic (22).jpg,sohini,Alignment Problem,3.0
+alpha_study_60_img\realistic face.jpg,sohini,No Errors,0.0
+alpha_study_60_img\female face(3).jpg,sohini,No Errors,0.0
+alpha_study_60_img\ap_4.jpg,sohini,Unrealistic,3.0
+alpha_study_60_img\face of a man with a tattoo3.jpg,sohini,Unrealistic,3.0
+alpha_study_60_img\face of a woman (7).jpg,sohini,Wrong Aspect,3.0
+alpha_study_60_img\face of a smiling child(2).jpg,sohini,No Errors,0.0
+alpha_study_60_img\face of an old man with beard (3).jpg,sohini,Incorrect Proportion,3.0
+alpha_study_60_img\realistic face of a young girl (3).jpg,sohini,Wrong Aspect,3.0
+alpha_study_60_img\face of a girl with glasses(2).jpg,sohini,No Errors,0.0
+alpha_study_60_img\female nose(12).jpg,sohini,Number of Features,4.0
+alpha_study_60_img\face of a sleeping boy(1).jpg,sohini,Number of Features,4.0
+alpha_study_60_img\pp_1.jpg,sohini,Incorrect Proportion,3.0
+alpha_study_60_img\face of a young# girl with a tattoo (3).jpg,sohini,No Errors,0.0
+alpha_study_60_img\correct_3.jpg,sohini,Unrealistic,3.0
+alpha_study_60_img\realistic face (47).jpg,sohini,No Errors,0.0
+alpha_study_60_img\realistic (5).jpg,sebastian,Unrealistic,4.0
+alpha_study_60_img\female face (1).jpg,sebastian,Unrealistic,3.0
+alpha_study_60_img\realistic face (1).jpg,sebastian,Unrealistic,3.0
+alpha_study_60_img\child.jpg,sebastian,Number of Features,5.0
+alpha_study_60_img\realistic (22).jpg,sebastian,No Errors,0.0
+alpha_study_60_img\realistic face.jpg,sebastian,Number of Features,1.0
+alpha_study_60_img\female face(3).jpg,sebastian,Incorrect Proportion,1.0
+alpha_study_60_img\ap_4.jpg,sebastian,Unrealistic,2.0
+alpha_study_60_img\face of a man with a tattoo3.jpg,sebastian,No Errors,0.0
+alpha_study_60_img\face of a woman (7).jpg,sebastian,Incorrect Proportion,1.0
+alpha_study_60_img\face of a smiling child(2).jpg,sebastian,Unrealistic,2.0
+alpha_study_60_img\face of an old man with beard (3).jpg,sebastian,Unrealistic,5.0
+alpha_study_60_img\realistic face of a young girl (3).jpg,sebastian,Unrealistic,4.0
+alpha_study_60_img\face of a girl with glasses(2).jpg,sebastian,No Errors,0.0
+alpha_study_60_img\female nose(12).jpg,sebastian,Alignment Problem,5.0
+alpha_study_60_img\face of a sleeping boy(1).jpg,sebastian,Number of Features,4.0
+alpha_study_60_img\pp_1.jpg,sebastian,Wrong Aspect,2.0
+alpha_study_60_img\face of a young# girl with a tattoo (3).jpg,sebastian,Unrealistic,4.0
+alpha_study_60_img\correct_3.jpg,sebastian,Wrong Aspect,1.0
+alpha_study_60_img\realistic face (47).jpg,sebastian,No Errors,0.0
+alpha_study_60_img\pp_1.jpg,Rony,Alignment Problem,3.0
+alpha_study_60_img\child face (3).jpg,Rony,Number of Features,4.0
+alpha_study_60_img\face of a girl with a tattoo(2).jpg,Rony,Unrealistic,3.0
+alpha_study_60_img\face of a girl with a tattoo(3).jpg,Rony,Unrealistic,1.0
+alpha_study_60_img\face of a woman (7).jpg,Rony,Incorrect Proportion,1.0
+alpha_study_60_img\realistic face (30).jpg,Rony,Number of Features,3.0
+alpha_study_60_img\face of an older woman.jpg,Rony,Incorrect Proportion,2.0
+alpha_study_60_img\realistic side face (3).jpg,Rony,No Errors,0.0
+alpha_study_60_img\female face(23).jpg,Rony,Alignment Problem,2.0
+alpha_study_60_img\female face (1).jpg,Rony,Unrealistic,4.0
+alpha_study_60_img\realistic (5).jpg,Rony,Unrealistic,5.0
+alpha_study_60_img\realistic face (47).jpg,Rony,Wrong Aspect,4.0
+alpha_study_60_img\realistic face of a young girl (3).jpg,Rony,Unrealistic,4.0
+alpha_study_60_img\old man face (1).jpg,Rony,No Errors,0.0
+alpha_study_60_img\ap_4.jpg,Rony,Alignment Problem,2.0
+alpha_study_60_img\face of an old man with beard (3).jpg,Rony,Unrealistic,5.0
+alpha_study_60_img\face of a little girl with a tattoo1.jpg,Rony,Unrealistic,1.0
+alpha_study_60_img\face of a girl with glasses(2).jpg,Rony,No Errors,0.0
+alpha_study_60_img\face of a sleeping boy(1).jpg,Rony,Number of Features,2.0
+alpha_study_60_img\face of an old man with beard (6).jpg,Rony,Unrealistic,4.0
+alpha_study_60_img\realistic (12).jpg,jana,Unrealistic,3.0
+alpha_study_60_img\face of a girl with a tattoo(3).jpg,jana,No Errors,0.0
+alpha_study_60_img\face of an older man.jpg,jana,Incorrect Proportion,2.0
+alpha_study_60_img\face of an old man with beard (6).jpg,jana,Unrealistic,5.0
+alpha_study_60_img\face of a boy with glasses.jpg,jana,Alignment Problem,2.0
+alpha_study_60_img\child face(3).jpg,jana,Unrealistic,5.0
+alpha_study_60_img\female face(15).jpg,jana,Alignment Problem,2.0
+alpha_study_60_img\male face(8).jpg,jana,Incorrect Proportion,3.0
+alpha_study_60_img\nf_5.jpg,jana,Number of Features,3.0
+alpha_study_60_img\female face(19).jpg,jana,Alignment Problem,3.0
+alpha_study_60_img\old lady face.jpg,jana,Incorrect Proportion,4.0
+alpha_study_60_img\adolescent (2).jpg,jana,Wrong Aspect,3.0
+alpha_study_60_img\face of a boy with glasses(2).jpg,jana,Unrealistic,3.0
+alpha_study_60_img\face of a boy with piercings(1).jpg,jana,Wrong Aspect,2.0
+alpha_study_60_img\female nose(2).jpg,jana,Wrong Aspect,3.0
+alpha_study_60_img\realistic (2).jpg,jana,Incorrect Proportion,2.0
+alpha_study_60_img\natural face.jpg,jana,No Errors,0.0
+alpha_study_60_img\face of a little girl with a tattoo1.jpg,jana,Unrealistic,3.0
+alpha_study_60_img\face of a woman.jpg,jana,Incorrect Proportion,3.0
+alpha_study_60_img\Teenage girl sleeping (2).jpg,jana,Wrong Aspect,3.0
+alpha_study_60_img\realistic (5).jpg,BesterMB,Unrealistic,5.0
+alpha_study_60_img\female face (1).jpg,BesterMB,Wrong Aspect,3.0
+alpha_study_60_img\realistic face (1).jpg,BesterMB,Wrong Aspect,3.0
+alpha_study_60_img\child.jpg,BesterMB,Number of Features,4.0
+alpha_study_60_img\realistic (22).jpg,BesterMB,No Errors,0.0
+alpha_study_60_img\realistic face.jpg,BesterMB,Alignment Problem,0.0
+alpha_study_60_img\female face(3).jpg,BesterMB,Incorrect Proportion,3.0
+alpha_study_60_img\ap_4.jpg,BesterMB,Unrealistic,4.0
+alpha_study_60_img\face of a man with a tattoo3.jpg,BesterMB,No Errors,0.0
+alpha_study_60_img\face of a woman (7).jpg,BesterMB,No Errors,0.0
+alpha_study_60_img\face of a smiling child(2).jpg,BesterMB,Unrealistic,4.0
+alpha_study_60_img\face of an old man with beard (3).jpg,BesterMB,Wrong Aspect,4.0
+alpha_study_60_img\realistic face of a young girl (3).jpg,BesterMB,Unrealistic,4.0
+alpha_study_60_img\face of a girl with glasses(2).jpg,BesterMB,Incorrect Proportion,3.0
+alpha_study_60_img\female nose(12).jpg,BesterMB,Wrong Aspect,4.0
+alpha_study_60_img\face of a sleeping boy(1).jpg,BesterMB,Unrealistic,4.0
+alpha_study_60_img\pp_1.jpg,BesterMB,Unrealistic,4.0
+alpha_study_60_img\face of a young# girl with a tattoo (3).jpg,BesterMB,Unrealistic,4.0
+alpha_study_60_img\correct_3.jpg,BesterMB,No Errors,0.0
+alpha_study_60_img\realistic face (47).jpg,BesterMB,Wrong Aspect,4.0
