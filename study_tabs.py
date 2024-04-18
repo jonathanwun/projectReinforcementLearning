@@ -96,7 +96,12 @@ def next_page(username):
     return gr.Button(interactive=False), gr.State()
 
 def get_pictures(username):
+    #print('call to get_pictures')
     df = pd.read_csv("batches.csv")
+    print(df['username'])
+    if username in df['username'].values:
+        print(df[df['username']==username]['batch'])
+        return df[df['username']==username]['batch'].iloc[0]
     first_empty_index = (df['username'].isna() | (df['username'] == '')).idxmax()
     df.at[first_empty_index, 'username'] = username
     df.to_csv("batches.csv", index=False)
@@ -111,16 +116,16 @@ def link_user_to_pics(username):
     df_users['Level'] = None
     global default_image
     default_image = gr.Image(df_users['username'][0])
-    #print(df_users)
-    global image_path
-    image_path=df_users['pictures']
+    # #print(df_users)
+    # global image_path
+    # image_path=df_users['pictures']
 
     user_file_path = Path(f"{ratings_path}ratings_{username}.csv")
 
     if not user_file_path.is_file():
         df_users.to_csv(f"{ratings_path}ratings_{username}.csv", index=False)
-    global data_array
-    data_array = df_users
+    # global data_array
+    # data_array = df_users
     return True
 
 def display_categories():
@@ -205,6 +210,10 @@ def save_rating(radio, slider, current_index, user):
 
     path = ratings_path + "ratings_" + user.value + ".csv"
     df = pd.read_csv(path)
+    
+    df_batches = pd.read_csv('batches.csv')
+    pics = df_batches[df_batches['username']==user.value]['batch'].iloc[0]
+    image_path = json.loads(pics.replace('\'', '"'))
 
     #print(f"Category: {radio}, Level: {slider}")
     
@@ -237,6 +246,10 @@ def save_rating(radio, slider, current_index, user):
 def save_no_mistake(current_index, user):
     path = f"{ratings_path}ratings_{user.value}.csv"
     df = pd.read_csv(path)
+
+    df_batches = pd.read_csv('batches.csv')
+    pics = df_batches[df_batches['username']==user.value]['batch'].iloc[0]
+    image_path = json.loads(pics.replace('\'', '"'))
     
     df.loc[df['pictures']==image_path[current_index],['Category']] = "No Errors"
     df.loc[df['pictures']==image_path[current_index],['Level']] = 0
@@ -544,8 +557,8 @@ class StudyFramework:
     
     def launch(self):
         self.app.queue()
-        self.app.launch(server_name="0.0.0.0", server_port=1342) # expose 
-        #self.app.launch(share=True)
+        #self.app.launch(server_name="0.0.0.0", server_port=1342) # expose 
+        self.app.launch(share=True)
     
 if __name__ == "__main__":
     framework = StudyFramework()
