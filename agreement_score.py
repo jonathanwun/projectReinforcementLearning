@@ -8,11 +8,11 @@ print(len(data))
 def agreed_level_score(diff):
     if (diff == 0).all():  # If all differences are 0
         agreement_score_level = 1.0
-    elif (diff == 1).all():  # If all differences are 1
+    elif ((diff > 0) & (diff <= 1)).all():  # If all differences are 1
         agreement_score_level = 0.75
-    elif (diff == 2).all():  # If all differences are 2
+    elif ((diff > 1) & (diff <= 2)).all():  # If all differences are 2
         agreement_score_level = 0.50
-    elif (diff == 3).all():  # If all differences are 3
+    elif ((diff > 2) & (diff<=3)).all():  # If all differences are 3
         agreement_score_level = 0.25
     else:  # If any difference is more than 3
         agreement_score_level = 0.0
@@ -129,6 +129,6 @@ new_df.to_csv(new_csv_file, index=False)
 
 print(f"New CSV file with unique images and agreement details saved to: {new_csv_file}")
 
-print(f"Count of images with atleast 2 agreements out of 3 {count_correct_categories}")
+print(f"Count of images with agreement on Category : {count_correct_categories}")
 
-print(f"Count of images with no agreement {count_no_category}")
+print(f"Count of images with no agreement : {count_no_category}")
