@@ -2,7 +2,7 @@ category,category_name,category_explanation,image_path,prompt,explanation,level_
 2,No Errors,Generated faces do not suffer from any kind of structural or feature-related problem. Realistic human faces.,./images_training/2.jpg,"sleeping face, man, realistic","No Errors 
 
 This image is classified as an image with no errors since it does not have any of the other five problems we are looking at in a generated face. The image accurately reflects the prompt that we have provided and the facial structure of the man looks realistic.",No errors
-1,Alignment Problem,Generated faces suffer from misaligned facial features making them look unrealistic. For example: misaligned nose or eyes or ears compared to the usual structure of a human face.,./images_training/7.jpg,"female face, realistic, nose","Alignment Problem
+1,Alignment Problem,Generated faces suffer from misaligned facial features. For example: misaligned nose or eyes or ears compared to the usual structure of a human face.,./images_training/7.jpg,"female face, realistic, nose","Alignment Problem
 
 This image at the very first glance might appear to you a bit discomforting.
 It clearly shows us some alignment problems in the face. Firstly the lips are misaligned and part of the lips are out of place. Moreover, the facial jaw structure looks different on the left and the right side. There also seems to be a double nose, which is not very clearly visible, thus making the nose misaligned to some extent.",A medium to high level of error like a 3 or 4 on a 5 scale.
@@ -15,11 +15,10 @@ One of the eyes is smaller than the other. If we observe carefully, we can notic
 
 This image might look at first a bit unsettling. 
 When looked at closely, we can observe that there is a repetition of facial features like eyebrows, triple nose, and double lips. Moreover, when we look at one of the ears observable, we can also see a double ear.",A high level of error like a 4 or 5 on a 5 scale. 
-5,Wrong Aspect Problem,"Generated faces that are inconsistent with the text prompt. For example, when the text prompt says 'a realistic face' and we get a generated face that looks like a painting, unrealistic falls into this category.",./images_training/5.jpg,realistic face happy,"Wrong Aspect Problem
+5,Wrong Aspect Problem,"Generated faces that are inconsistent with the text prompt or with a wrongly generated facial feature. For example, when the face itself is generated correctly but one eye is missing an iris.",./images_training/realistic face (33).jpg,realistic face happy,"Wrong Aspect Problem
 
-This image looks like a painting of a happy girl but doesn't look realistic. 
-There are compositional issues in the image like misaligned teeth and the wrong position of the earrings. The earrings on the right side of the face look like it is hanging in the air. We can also notice some unrealistic aspects like having a double set of eyelashes on the lower side of the eyes as well as the wrong structure of the nose.",A high level of error like a 4 or 5 on a 5 scale.
+This image generally looks realistic but the pupil of the right eye is slightly off-center. This make sthis a wrong aspect problem since something like that doesn't happen naturally.",A high level of error like a 4 or 5 on a 5 scale.
 6,Unrealistic Image,"Generated faces lacking on human-like characteristics. For example, generated faces appearing like paintings or cartoonish characters are considered unrealistic to our human perception falls under this category.",./images_training/12.jpg,"realistic, toddler face, male","Unrealistic Image
 
-This image though looks like that of a toddler, is not realistic and rather looks like a painting.
-There are some aspects like the size of the eyes and the structure of the ears which make it unrealistic and different from a human toddler. Even though it is understandable that the image is that of a toddler, we cannot label it as a realistic image of a toddler.",A medium level of error like a 2 or 3 on a 5 scale.
+This image although it looks like a toddler with generally correct proportions and features, is not realistic and looks like a painting.
+Even though it is understandable that the image is that of a toddler, we cannot label it as a realistic image of a toddler.",A medium level of error like a 2 or 3 on a 5 scale.
