@@ -1,6 +1,8 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 file_path="./merged_csv_9.csv"
+
 data=pd.read_csv(file_path)
 print(len(data))
 
@@ -27,7 +29,6 @@ print(len(unique_images))
 duplicates = data['pictures'].value_counts()
 print(duplicates)
 
-
 cat_count = data['Category'].value_counts()
 #maximum selected category
 max_cat=cat_count.idxmax()
@@ -48,18 +49,18 @@ for picture in unique_images:
     # Check if there are exactly three rows for this picture
     if len(rows_for_picture) == 3:
         # Get the unique categories for this picture
-        unique_categories = rows_for_picture['Category'].unique()
+        unique_cat_pic = rows_for_picture['Category'].unique()
         unique_count = rows_for_picture['Category'].value_counts()
         #print(f"unique cats{unique_categories}")
         #print(f"unique counts{unique_count}")
 
         # If there is exactly one unique category, print the details
-        if len(unique_categories) == 1:
+        if len(unique_cat_pic) == 1:
             print(f"Image: {picture}")
-            print(f"Category: {unique_categories[0]}")
+            print(f"Category: {unique_cat_pic[0]}")
             print("---all 3 agree----")
             count_correct_categories += 1
-            agreed_category = unique_categories[0]
+            agreed_category = unique_cat_pic[0]
             agreement_score_cat = 1.0  # Since all three are the same
             level_values = rows_for_picture['Level']
             #print(f"level{level_values}")
@@ -125,7 +126,43 @@ new_df = pd.DataFrame(new_data)
 
 # Step 5: Save the new DataFrame to a new CSV file
 new_csv_file = "./unique_images_with_agreement.csv"
+
 new_df.to_csv(new_csv_file, index=False)
+
+modified_data =pd.read_csv(new_csv_file)
+avg_lvls={}
+std_lvls={}
+count_pics_cat={}
+
+def category_agreement():
+    unique_category=modified_data['agreed_category'].dropna().unique()
+
+    for cat in unique_category:
+        rows_images_cat=modified_data[modified_data['agreed_category']==cat]
+        count_pic_cat=len(rows_images_cat)
+        avg_lvl=rows_images_cat['level_average'].mean().round(3)
+        std_dev_lvl=rows_images_cat['level_average'].std()
+        avg_lvls[cat]=avg_lvl
+        std_lvls[cat]=round(std_dev_lvl,3)
+        count_pics_cat[cat]=count_pic_cat
+    print(f"Average level per category {avg_lvls}")   
+    print(f"Standard deviation of level per category {std_lvls}")   
+    print(f"# images per category {count_pics_cat}")   
+    #ploting number of images per category
+    categories=list(count_pics_cat.keys())
+    counts=list(count_pics_cat.values())
+    plt.figure(figsize=(10, 6))  # Optional: Adjusts the figure size
+    plt.bar(categories, counts, color='skyblue')  # You can choose any color
+    plt.title('Number of Images per Category')
+    plt.xlabel('Categories')
+    plt.ylabel('Number of Images')
+    plt.xticks(rotation=45)  # Rotates labels to prevent overlapping
+    plt.tight_layout()  # Adjusts subplots to give some padding
+    plt.show()
+    
+
+#function to find the average per category, std deviation between values of levels per category, number of images per category
+category_agreement()
 
 print(f"New CSV file with unique images and agreement details saved to: {new_csv_file}")
 
