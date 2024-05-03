@@ -26,6 +26,7 @@ default_level="No errors"
 default_cat_exp="Generated faces do not suffer from any kind of structural or feature-related problem. Realistic human faces."
 height = 576*1.5
 width = 416*1.5
+category_list={"Alignment Problem": "misaligned eyes,nose,lips","No Errors": "looks realistic","Wrong Aspect": "text prompt and image are inconsistent, wrongly generated features","Number of Features": "count of features incorrect","Incorrect Proportion":"features like eyes are of different sizes","Unrealistic":"looks like a painting"}
 # Load the CSV file
 df = pd.read_csv('./training_images_log.csv')
 
@@ -163,10 +164,10 @@ def show_solution(category, slider, current_pre_study_index):
     if category == data_array['category_name'][current_pre_study_index]:
         answer_text = f"Your selection is correct.\nExplanation: {data_array['explanation'][current_pre_study_index]}\nLevel of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
 
-        return gr.Text(answer_text, visible=True, elem_id='correct_answer'), gr.Button(visible=True)
+        return gr.Text(answer_text, visible=True, elem_id='correct_answer'),gr.Textbox(visible=False),gr.Button(visible=True)
     else:
         answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}\n Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}\n\n Explanation: {data_array['explanation'][current_pre_study_index]}"
-        return gr.Text(answer_text, visible=True, elem_id='wrong_answer'), gr.Button(visible=True)
+        return gr.Text(answer_text, visible=True, elem_id='wrong_answer'),gr.Textbox(visible=False), gr.Button(visible=True)
 
 def show_solution_no_button(current_pre_study_index):
     
@@ -175,10 +176,10 @@ def show_solution_no_button(current_pre_study_index):
     if  (data_array['category_name'][current_pre_study_index] == "No Errors"):
         answer_text = f"Your selection is correct."
 
-        return gr.Text(answer_text, visible=True), gr.Button(visible=True)
+        return gr.Text(answer_text, visible=True),gr.Textbox(visible=False), gr.Button(visible=True)
     else:
         answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}\n Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}\n\n Explanation: {data_array['explanation'][current_pre_study_index]}"
-        return gr.Text(answer_text, visible=True), gr.Button(visible=True)
+        return gr.Text(answer_text, visible=True),gr.Textbox(visible=False), gr.Button(visible=True)
 
 
 # Boolean which indicates if all pictures were displayed
@@ -225,7 +226,7 @@ def save_rating(radio, slider, current_index, user):
     #print(df)
     categories_radio = gr.Radio(visible=False,value=None)
     slider =  gr.Slider(visible=False,value=None)
-
+    category_text=gr.Textbox(visible=False)
     df.to_csv(path, header=True, index=False)
     
     if current_index < len(df['pictures'])-1:
@@ -240,10 +241,7 @@ def save_rating(radio, slider, current_index, user):
         yes_button = gr.Button(interactive=False)
         no_button = gr.Button(interactive=False)
 
-     
-            
-    
-    return img, prompt, categories_radio, slider, gr.Button(interactive=False), finish_button, yes_button, no_button, current_index_var
+    return img, prompt, categories_radio, slider, gr.Button(interactive=False), finish_button, yes_button, no_button, current_index_var,category_text
 
 def save_no_mistake(current_index, user):
     path = f"{ratings_path}ratings_{user.value}.csv"
@@ -379,18 +377,17 @@ class StudyFramework:
                             
                             
                             categories_radio = gr.Radio(visible=False, label="Error Category")
-                            
+                           
                             slider = gr.Slider(visible=False, label="Level of Error")
-
+                            category_text=gr.Textbox(visible=False,label="Description of Category")
                             submit_button = gr.Button("Submit", interactive=False)
                             
                             yes_button.click(display_categories, 
                                  inputs=[],
                                  outputs=[categories_radio, slider]
                             )
-
-                            categories_radio.select(fn=self.on_choice, inputs=[], outputs=[submit_button])
                             
+                            categories_radio.select(fn=self.on_choice, inputs=[], outputs=[category_text,submit_button])
                             
                             answer_text=""
                             
@@ -398,13 +395,13 @@ class StudyFramework:
                             next_image_button = gr.Button("Next Image",visible=False)
 
                             
-                            no_button.click(fn=show_solution_no_button, inputs=[current_pre_study_index_var], outputs=[answer, next_image_button])
+                            no_button.click(fn=show_solution_no_button, inputs=[current_pre_study_index_var], outputs=[answer, category_text,next_image_button])
                     
                 
                             submit_button.click(
                                 fn=show_solution,
                                 inputs=[categories_radio, slider, current_pre_study_index_var],
-                                outputs=[answer, next_image_button]
+                                outputs=[answer,category_text, next_image_button]
                             )
                     with gr.Row():
                         tab2_prev = gr.Button("Back to Training")
@@ -471,11 +468,11 @@ class StudyFramework:
                                         outputs=[categories_radio, slider]
                                     )
                     
-                            
+                            category_text=gr.Textbox(visible=False,label="Description of Category")
                             
                             submit_button = gr.Button("Submit", interactive=False)
                             
-                            categories_radio.select(fn=self.on_choice, inputs=[], outputs=[submit_button])
+                            categories_radio.select(fn=self.on_choice, inputs=[], outputs=[category_text,submit_button])
     
                             
                     
@@ -512,7 +509,7 @@ class StudyFramework:
                 submit_button.click(
                                 fn=save_rating,
                                 inputs=[categories_radio, slider, current_index_var, user],
-                                outputs=[image, prompt, categories_radio, slider, submit_button, tab3_finish_study, yes_button, no_button, current_index_var]
+                                outputs=[image, prompt, categories_radio, slider, submit_button, tab3_finish_study, yes_button, no_button, current_index_var,category_text]
                             )
                 no_button.click(fn=save_no_mistake, inputs=[current_index_var, user], outputs=[image, prompt, submit_button ,tab3_finish_study, yes_button, no_button, current_index_var])
                 # tab1_choices.select(self.on_choise, inputs=tab1_choices, outputs=[tab2, tab1_next])
@@ -522,10 +519,12 @@ class StudyFramework:
 
     
     
-    def on_choice(self):
+    def on_choice(self,evt:gr.SelectData):
         # print(selection.target, selection.selected, selection.value)
         # TODO do something with selection
-        return gr.Button(interactive=True)
+    
+        return gr.Textbox(category_list[evt.value],visible=True),gr.Button(interactive=True)
+
     
     def on_tab0_clicked(self):
         print("tab0 clicked")
