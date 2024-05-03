@@ -163,10 +163,10 @@ def show_solution(category, slider, current_pre_study_index):
     if category == data_array['category_name'][current_pre_study_index]:
         answer_text = f"Your selection is correct.\nExplanation: {data_array['explanation'][current_pre_study_index]}\nLevel of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
 
-        return gr.Text(answer_text, visible=True), gr.Button(visible=True)
+        return gr.Text(answer_text, visible=True, elem_id='correct_answer'), gr.Button(visible=True)
     else:
         answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}\n Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}\n\n Explanation: {data_array['explanation'][current_pre_study_index]}"
-        return gr.Text(answer_text, visible=True), gr.Button(visible=True)
+        return gr.Text(answer_text, visible=True, elem_id='wrong_answer'), gr.Button(visible=True)
 
 def show_solution_no_button(current_pre_study_index):
     
@@ -275,13 +275,22 @@ def dummy_image_loader(path):
     # ignore path and return random image
     return Image.fromarray(np.random.randint(0, 256, size=(512, 384, 3)).astype(np.uint8))
 
+css = """
+.wrong_answer {
+    color: red;
+}
+        
+.correct_answer {
+    color: green;
+}
+"""
 class StudyFramework:    
     def __init__(self) -> None:
-        with gr.Blocks() as self.app:
+        with gr.Blocks(css=css) as self.app:
             
             with gr.Tabs() as tabs:
                 ###### FIRST TAB ###############
-                with gr.Tab("First", id=0) as tab0:
+                with gr.Tab("Introduction", id=0) as tab0:
                     user = gr.State()
                     with gr.Blocks() as introduction:
     
@@ -300,7 +309,7 @@ class StudyFramework:
                         
                     
                 ###### SECOND TAB ###############
-                with gr.Tab("Second", interactive=False, id=1) as tab1:
+                with gr.Tab("Training", interactive=False, id=1) as tab1:
                     gr.Markdown(
                     """
                     # Training phase
@@ -332,7 +341,7 @@ class StudyFramework:
                     
                     
                 ###### THIRD TAB ###############
-                with gr.Tab("Third", visible=True, interactive=False, id=2) as tab2:
+                with gr.Tab("Pre-Study", visible=True, interactive=False, id=2) as tab2:
                     data_array = pd.read_csv("prestudy_log.csv")
                     first_image = Image.open(data_array['image_path'][0])
                     gr.Markdown(
@@ -410,7 +419,7 @@ class StudyFramework:
             
                     
                 ###### FOURTH TAB ###############  
-                with gr.Tab("Fourth", interactive=False, visible=False, id=3) as tab3:
+                with gr.Tab("Main Study", interactive=False, visible=False, id=3) as tab3:
                     current_index_var = gr.State(0)
                     gr.Markdown(
                     """
@@ -481,7 +490,7 @@ class StudyFramework:
                     
 
                 ###### FIFTH TAB ###############  
-                with gr.Tab("Fith", interactive=False, visible=False, id=4) as tab4:
+                with gr.Tab("Finish", interactive=False, visible=False, id=4) as tab4:
                     gr.Markdown(
                                 """
                               # Thank you for Participating!!!
