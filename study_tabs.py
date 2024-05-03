@@ -151,7 +151,7 @@ def update_prestudy_data(index):
     img = gr.ImageEditor(img,height=height,width=width, label=current_picture_label)
     
     if all_images_done:
-        return prompt_prestudy, img, gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True), gr.Button(interactive=False),gr.Button(interactive=False), gr.Button(interactive=False), current_pre_study_index
+        return prompt_prestudy, gr.ImageEditor(), gr.Radio(visible=False, value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=True), gr.Button(interactive=False),gr.Button(interactive=False), gr.Button(interactive=False), current_pre_study_index
     return prompt_prestudy,img, gr.Radio(visible=False,value=None), gr.Slider(visible=False,value=None), gr.Text(visible=False,value=None), gr.Button(visible=False),gr.Button(interactive=False), gr.Button(interactive=False),gr.Button(), gr.Button(), current_pre_study_index
 
 def show_solution(category, slider, current_pre_study_index):
@@ -203,6 +203,8 @@ def update_data(current_index, user):
     prompt = df_prompts[df_prompts['Image']==img_path.split('\\')[1]]['Prompts'].iloc[0]
         
     img = gr.ImageEditor(img,height=height,width=width, label=str(current_index_var+1) + "/" + str(batch_size))
+    if current_index+1 == batch_size:
+        return gr.ImageEditor(), prompt, current_index_var
     return img, prompt, current_index_var
 
 
