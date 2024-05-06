@@ -164,10 +164,10 @@ def show_solution(category, slider, current_pre_study_index):
     if category == data_array['category_name'][current_pre_study_index]:
         answer_text = f"Your selection is correct.\nExplanation: {data_array['explanation'][current_pre_study_index]}\nLevel of Error: {data_array['level_of_mistake'][current_pre_study_index]}"
 
-        return gr.Text(answer_text, visible=True, elem_id='correct_answer'),gr.Textbox(visible=False),gr.Button(visible=True)
+        return gr.Text(answer_text, visible=True, elem_classes='correct'),gr.Textbox(visible=False),gr.Button(visible=True)
     else:
         answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}\n Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}\n\n Explanation: {data_array['explanation'][current_pre_study_index]}"
-        return gr.Text(answer_text, visible=True, elem_id='wrong_answer'),gr.Textbox(visible=False), gr.Button(visible=True)
+        return gr.Text(answer_text, visible=True, elem_classes='wrong'),gr.Textbox(visible=False), gr.Button(visible=True)
 
 def show_solution_no_button(current_pre_study_index):
     
@@ -176,10 +176,10 @@ def show_solution_no_button(current_pre_study_index):
     if  (data_array['category_name'][current_pre_study_index] == "No Errors"):
         answer_text = f"Your selection is correct."
 
-        return gr.Text(answer_text, visible=True),gr.Textbox(visible=False), gr.Button(visible=True)
+        return gr.Text(answer_text, visible=True, elem_classes="correct"),gr.Textbox(visible=False), gr.Button(visible=True)
     else:
         answer_text = f"Your selection was wrong. Category: {data_array['category_name'][current_pre_study_index]}\n Level of Error: {data_array['level_of_mistake'][current_pre_study_index]}\n\n Explanation: {data_array['explanation'][current_pre_study_index]}"
-        return gr.Text(answer_text, visible=True),gr.Textbox(visible=False), gr.Button(visible=True)
+        return gr.Text(answer_text, visible=True, elem_classes="wrong"),gr.Textbox(visible=False), gr.Button(visible=True)
 
 
 # Boolean which indicates if all pictures were displayed
@@ -276,13 +276,8 @@ def dummy_image_loader(path):
     return Image.fromarray(np.random.randint(0, 256, size=(512, 384, 3)).astype(np.uint8))
 
 css = """
-.wrong_answer {
-    color: red;
-}
-        
-.correct_answer {
-    color: green;
-}
+.correct textarea {background-color: rgba(0, 100, 0, 0.6)}
+.wrong textarea {background-color: rgba(100, 0, 0, 0.6)}
 """
 class StudyFramework:    
     def __init__(self) -> None:
