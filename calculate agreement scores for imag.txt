@@ -1,0 +1,9 @@
+calculate agreement scores for images
+   - agreement score on category 
+   - agreement score on level+
+   - how often each category got selected
+   - 2 of 3 should have same rating
+
+adjust description of categories: 
+	-maybe rename categorie to e.g. wrong style
+	
