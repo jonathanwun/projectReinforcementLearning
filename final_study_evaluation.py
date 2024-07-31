@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-file_path="./merged_csv_9.csv"
+file_path="./merged_csv_30.csv"
 
 data=pd.read_csv(file_path)
 print(len(data))
@@ -23,14 +23,18 @@ def agreed_level_score(diff):
             
 count_correct_categories = 0
 count_no_category = 0
-count_2_three=0
-count_3_three=0
 
 unique_images=data['pictures'].unique()
 print(len(unique_images))
 
 duplicates = data['pictures'].value_counts()
 print(duplicates)
+
+# Save the value counts to a new CSV file
+value_counts_csv_file = "./picture_counts.csv"
+duplicates.to_csv(value_counts_csv_file, index=False)
+
+print(f"Value counts saved to: {value_counts_csv_file}")
 
 cat_count = data['Category'].value_counts()
 #maximum selected category
@@ -48,21 +52,20 @@ for picture in unique_images:
     
     # Filter the DataFrame for rows with the current "pictures" value
     rows_for_picture = data[data['pictures'] == picture]
-    
+    print(picture)
     # Check if there are exactly three rows for this picture
     if len(rows_for_picture) == 3:
         # Get the unique categories for this picture
         unique_cat_pic = rows_for_picture['Category'].unique()
         unique_count = rows_for_picture['Category'].value_counts()
-        #print(f"unique cats{unique_categories}")
-        #print(f"unique counts{unique_count}")
+        print(f"unique cats{unique_cat_pic}")
+        print(f"unique counts{unique_count}")
 
         # If there is exactly one unique category, print the details
         if len(unique_cat_pic) == 1:
             print(f"Image: {picture}")
             print(f"Category: {unique_cat_pic[0]}")
             print("---all 3 agree----")
-            count_3_three+=1
             count_correct_categories += 1
             agreed_category = unique_cat_pic[0]
             agreement_score_cat = 1.0  # Since all three are the same
@@ -86,15 +89,17 @@ for picture in unique_images:
             
             # If there are multiple categories, select the one with the highest count
             max_count_category = unique_count.idxmax()
+            print(max_count_category)
             max_count = unique_count.max()
+            print(max_count)
             filtered_rows = rows_for_picture[rows_for_picture['Category'] == max_count_category]
             print(f"filtered_row : {filtered_rows}")
             # Check if there are conflicting categories with the same count
             if (unique_count == max_count).sum() == 1:
+            #if max_count == 2:
                 print(f"Image: {picture}")
                 print(f"Category: {max_count_category}")
                 print("---2 out of 3 agree---")
-                count_2_three+=1
                 count_correct_categories += 1
                 agreed_category = max_count_category
                 agreement_score = max_count / 3  # Divide by 3 for 3 repetitions
@@ -133,7 +138,7 @@ for picture in unique_images:
 new_df = pd.DataFrame(new_data)
 
 # Step 5: Save the new DataFrame to a new CSV file
-new_csv_file = "./unique_images_with_agreement_demo.csv"
+new_csv_file = "./unique_images_with_agreement_final.csv"
 
 new_df.to_csv(new_csv_file, index=False)
 
@@ -172,26 +177,13 @@ def category_agreement():
     drop_no_errors=modified_data[modified_data['agreed_category']!="No Errors"]
     plt.figure(figsize=(10,6))
     sns.boxplot(x='agreed_category', y='level_average', data=drop_no_errors)
-    plt.title('Distribution of Artifact Levels by Category',fontsize=12)
+    plt.title('Distribution of Level Values per Category',fontsize=12)
     plt.xlabel('Category',fontsize=10)
-    plt.ylabel('Level of Artifact',fontsize=10)
+    plt.ylabel('Level of Error',fontsize=10)
     plt.xticks(rotation=45,ha='right', fontsize=8)
     #plt.tight_layout()
     plt.subplots_adjust(bottom=0.25)
     plt.show()
-
-    #line graph
-    plt.figure(figsize=(10,6))
-    sns.lineplot(x='agreed_category', y='level_average', data=drop_no_errors, label='Average Level of Artifact')
-    plt.title('Distribution of Average Artifact Level per Category',fontsize=12)
-    plt.xlabel('Category',fontsize=10)
-    plt.ylabel('Level of Artifact',fontsize=10)
-    plt.xticks(rotation=45,ha='right', fontsize=8)
-    plt.legend()
-    #plt.tight_layout()
-    plt.subplots_adjust(bottom=0.25)
-    plt.show()
-
 
     #scatter plot
     '''plt.figure(figsize=(14, 10))
@@ -212,8 +204,3 @@ print(f"Count of images with agreement on Category : {count_correct_categories}"
 
 print(f"Count of images with no agreement : {count_no_category}")
 
-
-print(f"Count 2 out 3 : {count_2_three}")
-
-
-print(f"Count 3 out 3 : {count_3_three}")

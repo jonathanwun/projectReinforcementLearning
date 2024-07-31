@@ -1,0 +1,201 @@
+pictures,agreed_category,agreement_score_category,level_average,agreement_score_level
+images\sleeping face(4).jpg,Number of Features,0.67,2.0,0.5
+images\realistic (7).jpg,No Errors,0.67,0.0,1.0
+images\realistic face (2).jpg,Unrealistic,1.0,2.67,0.5
+images\face of a smiling man with long red hair(1).jpg,,0.0,,0.0
+images\face of a girl with piercings2.jpg,No Errors,1.0,0.0,1.0
+images\realistic face (43).jpg,,0.0,,0.0
+images\nf_2.jpg,Unrealistic,1.0,3.33,0.5
+images\child face(7).jpg,Number of Features,0.67,2.5,0.75
+images\face of a man (1).jpg,Incorrect Proportion,1.0,1.67,0.75
+images\realistic face (7).jpg,,0.0,,0.0
+images\face(2).jpg,Unrealistic,1.0,2.0,0.5
+images\adolescent.jpg,No Errors,0.67,0.0,1.0
+images\sleeping face(5).jpg,Alignment Problem,0.67,1.5,0.75
+images\face of a smiling girl with red hair.jpg,Unrealistic,1.0,3.67,0.5
+images\face of a boy with piercings(3).jpg,,0.0,,0.0
+images\ugly male face(3).jpg,Unrealistic,0.67,2.0,1.0
+images\female face(8).jpg,Unrealistic,1.0,3.33,0.75
+images\realistic face (9).jpg,No Errors,0.67,0.0,1.0
+images\face of a sleeping boy(2).jpg,Number of Features,0.67,2.5,0.75
+images\face of a smiling boy(2).jpg,Unrealistic,1.0,3.67,0.75
+images\realistic (13).jpg,No Errors,0.67,0.0,1.0
+images\female face(31).jpg,,0.0,,0.0
+images\realistic face (8).jpg,,0.0,,0.0
+images\face of a darkskinned woman.jpg,No Errors,0.67,0.0,1.0
+images\nf_4.jpg,Number of Features,0.67,2.5,0.75
+images\female face(11).jpg,,0.0,,0.0
+images\realistic face (46).jpg,Unrealistic,1.0,4.33,0.5
+images\female face(9).jpg,Unrealistic,0.67,3.0,1.0
+images\boy face (1).jpg,Alignment Problem,0.67,1.5,0.75
+images\child face.jpg,Number of Features,1.0,4.0,0.5
+images\female face(30).jpg,Unrealistic,1.0,3.67,0.5
+images\female face(21).jpg,Number of Features,0.67,3.5,0.25
+images\sleeping face(2).jpg,Number of Features,1.0,4.67,0.75
+images\realistic face of a young girl (2).jpg,Unrealistic,0.67,2.0,0.0
+images\ip_1.jpg,,0.0,,0.0
+images\face of a smiling darkskinned woman(1).jpg,Unrealistic,1.0,2.33,0.5
+images\correct_5.jpg,,0.0,,0.0
+images\correct_4.jpg,No Errors,0.67,0.0,1.0
+images\realistic face (4).jpg,Incorrect Proportion,0.67,1.5,0.75
+images\face of a man with a face piercing.jpg,No Errors,0.67,0.0,1.0
+images\old man face (2).jpg,Incorrect Proportion,1.0,1.33,0.5
+images\face of a boy with piercings(2).jpg,,0.0,,0.0
+images\face of a girl.jpg,Unrealistic,0.67,2.0,1.0
+images\old lady face (5).jpg,,0.0,,0.0
+images\nf_6.jpg,Number of Features,0.67,2.5,0.75
+images\face of a sleeping girl(1).jpg,Unrealistic,1.0,3.67,0.75
+images\realistic face (17).jpg,Wrong Aspect,0.67,1.0,0.5
+images\face of a sleeping boy(3).jpg,Unrealistic,1.0,4.0,0.5
+images\face(5).jpg,Number of Features,1.0,3.33,0.75
+images\unreal_1.jpg,Unrealistic,1.0,4.33,0.5
+images\child face (2).jpg,Number of Features,0.67,2.5,0.75
+images\ugly male face.jpg,No Errors,0.67,0.0,1.0
+images\female face(13).jpg,,0.0,,0.0
+images\ip_2.jpg,,0.0,,0.0
+images\female face(18).jpg,Unrealistic,0.67,3.0,1.0
+images\old lady face (4).jpg,,0.0,,0.0
+images\child face(2).jpg,Unrealistic,0.67,4.5,0.75
+images\face of a darkskinned man(1).jpg,Unrealistic,1.0,2.0,0.5
+images\face of a woman with black hair(2).jpg,,0.0,,0.0
+images\female face(22).jpg,,0.0,,0.0
+images\realistic face (13).jpg,Unrealistic,0.67,3.0,0.5
+images\realistic face (41).jpg,,0.0,,0.0
+images\face of a boy with piercings.jpg,No Errors,1.0,0.0,1.0
+images\realistic (20).jpg,Unrealistic,1.0,4.0,0.5
+images\young boy (1).jpg,,0.0,,0.0
+images\8.jpg,,0.0,,0.0
+images\face of a man with glasses2.jpg,No Errors,1.0,0.0,1.0
+images\realistic (14).jpg,,0.0,,0.0
+images\realistic face (19).jpg,Unrealistic,1.0,3.67,0.75
+images\face of a girl with glasses.jpg,Wrong Aspect,0.67,1.5,0.75
+images\unreal_4.jpg,Unrealistic,1.0,5.0,1.0
+images\adolescent (1).jpg,Unrealistic,1.0,3.33,0.75
+images\sleeping face(1).jpg,No Errors,0.67,0.0,1.0
+images\face of a man with a face piercing2.jpg,No Errors,0.67,0.0,1.0
+images\female face(25).jpg,,0.0,,0.0
+images\school girl face (3).jpg,Unrealistic,1.0,1.67,0.5
+images\child face(6).jpg,Number of Features,1.0,4.0,1.0
+images\realistic face (3).jpg,Unrealistic,0.67,3.0,0.5
+images\a realistic face (1).jpg,,0.0,,0.0
+images\face of a boy with black hair(1).jpg,Unrealistic,0.67,3.0,0.5
+images\female nose.jpg,Alignment Problem,0.67,2.0,0.0
+images\realistic face (5).jpg,Unrealistic,1.0,1.0,1.0
+images\face of a smiling darkskinned woman.jpg,Incorrect Proportion,0.67,1.5,0.25
+images\unreal_3.jpg,Unrealistic,0.67,3.0,0.5
+images\realistic (8).jpg,No Errors,0.67,0.0,1.0
+images\face of a man with a tattoo2.jpg,No Errors,0.67,0.0,1.0
+images\correct_1.jpg,No Errors,0.67,0.0,1.0
+images\female nose(3).jpg,Wrong Aspect,1.0,2.67,0.75
+images\correct_2.jpg,No Errors,0.67,0.0,1.0
+images\female face(26).jpg,Unrealistic,0.67,2.5,0.25
+images\realistic (16).jpg,Alignment Problem,0.67,0.5,0.75
+images\face of a man with black hair.jpg,Unrealistic,0.67,4.0,1.0
+images\child face(5).jpg,,0.0,,0.0
+images\female nose(1).jpg,No Errors,0.67,0.0,1.0
+images\face of a man with a tattoo1.jpg,,0.0,,0.0
+images\face of a woman with black hair(1).jpg,Unrealistic,1.0,3.33,0.75
+images\female face(29).jpg,,0.0,,0.0
+images\adolescent (3).jpg,Unrealistic,1.0,3.33,0.75
+images\face of a man (2).jpg,Unrealistic,0.67,1.5,0.75
+images\old lady with white hair.jpg,No Errors,0.67,0.0,1.0
+images\unreal_2.jpg,Unrealistic,0.67,3.5,0.75
+images\realistic face (14).jpg,Incorrect Proportion,0.67,2.0,0.5
+images\realistic (18).jpg,Alignment Problem,0.67,1.5,0.75
+images\realistic face of a young girl (4).jpg,Alignment Problem,0.67,1.5,0.75
+images\female face(4).jpg,Incorrect Proportion,0.67,1.5,0.75
+images\face of a smiling child.jpg,Alignment Problem,0.67,1.5,0.75
+images\face of a boy with glasses(1).jpg,No Errors,0.67,0.0,1.0
+images\face of a sleeping girl(2).jpg,Unrealistic,0.67,3.0,1.0
+images\realistic (15).jpg,Unrealistic,1.0,4.0,0.5
+images\face of a boy with black hair.jpg,Unrealistic,1.0,2.67,0.5
+images\face of a darkskinned man.jpg,No Errors,1.0,0.0,1.0
+images\face(1).jpg,Unrealistic,1.0,3.33,0.75
+images\face of a man.jpg,Unrealistic,1.0,4.33,0.5
+images\adolescent (4).jpg,No Errors,0.67,0.0,1.0
+images\realistic (10).jpg,Wrong Aspect,0.67,2.0,0.5
+images\female face(6).jpg,,0.0,,0.0
+images\face of a smiling child(1).jpg,Unrealistic,1.0,3.67,0.75
+images\face of a smiling woman(1).jpg,Incorrect Proportion,0.67,2.0,0.5
+images\realistic face (40).jpg,,0.0,,0.0
+images\face of a girl with glasses(3).jpg,Wrong Aspect,0.67,2.0,1.0
+images\face of a smiling man(1).jpg,Unrealistic,1.0,3.33,0.5
+images\female face(17).jpg,,0.0,,0.0
+images\realistic face (10).jpg,,0.0,,0.0
+images\sleeping face.jpg,,0.0,,0.0
+images\realistic face of a young girl.jpg,No Errors,1.0,0.0,1.0
+images\face of a man with glasses3.jpg,,0.0,,0.0
+images\face of a man with glasses.jpg,Alignment Problem,0.67,3.5,0.75
+images\pp_5.jpg,Unrealistic,0.67,4.5,0.75
+images\old lady face (1).jpg,,0.0,,0.0
+images\face of a man with a face piercing1.jpg,No Errors,0.67,0.0,1.0
+images\school boy face (3).jpg,Unrealistic,0.67,1.0,0.5
+images\realistic (3).jpg,Incorrect Proportion,0.67,2.0,1.0
+images\face of a sleeping boy.jpg,Number of Features,1.0,4.0,1.0
+images\old man face.jpg,,0.0,,0.0
+images\old man face (3).jpg,Incorrect Proportion,0.67,3.0,0.5
+images\face of a man with a tattoo.jpg,,0.0,,0.0
+images\face of a man (4).jpg,No Errors,0.67,0.0,1.0
+images\female face(12).jpg,No Errors,0.67,0.0,1.0
+images\realistic face (42).jpg,Wrong Aspect,0.67,1.5,0.75
+images\female face(10).jpg,No Errors,1.0,0.0,1.0
+images\face of a girl(2).jpg,Unrealistic,1.0,3.0,0.5
+images\realistic (21).jpg,Unrealistic,1.0,3.67,0.5
+images\perfect.jpg,No Errors,0.67,0.0,1.0
+images\realistic (19).jpg,,0.0,,0.0
+images\face of a girl with piercings(1).jpg,Alignment Problem,0.67,2.0,0.5
+images\school girl face (2).jpg,No Errors,0.67,0.0,1.0
+images\face of a woman with black hair.jpg,Unrealistic,1.0,3.33,0.75
+images\face of a little girl with a tattoo.jpg,Unrealistic,1.0,3.33,0.5
+images\realistic face (12).jpg,Unrealistic,1.0,4.67,0.75
+images\realistic face (20).jpg,Incorrect Proportion,0.67,2.0,1.0
+images\realistic (6).jpg,Incorrect Proportion,0.67,1.5,0.75
+images\realistic face (16).jpg,,0.0,,0.0
+images\face of a man with black hair(1).jpg,Incorrect Proportion,0.67,2.5,0.75
+images\realistic face (6).jpg,,0.0,,0.0
+images\face of a smiling woman(2).jpg,,0.0,,0.0
+images\school boy face.jpg,Number of Features,1.0,2.0,0.5
+images\face of a woman (1).jpg,Unrealistic,1.0,2.0,0.5
+images\realistic face (45).jpg,,0.0,,0.0
+images\ip_5.jpg,Alignment Problem,1.0,1.33,0.75
+images\boy face.jpg,Alignment Problem,0.67,2.0,0.5
+images\girl with tattoo.jpg,,0.0,,0.0
+images\face of a man (3).jpg,No Errors,0.67,0.0,1.0
+images\face of a smiling boy(1).jpg,Unrealistic,1.0,3.67,0.75
+images\realistic face sad.jpg,Unrealistic,0.67,2.0,0.0
+images\young.jpg,Unrealistic,1.0,1.67,0.5
+images\realistic face (11).jpg,Incorrect Proportion,0.67,1.5,0.75
+images\face of a smiling boy(3).jpg,,0.0,,0.0
+images\ip_4.jpg,Incorrect Proportion,0.67,1.0,1.0
+images\realistic (23).jpg,Unrealistic,1.0,2.67,0.75
+images\face of a girl(4).jpg,Unrealistic,1.0,3.67,0.5
+images\realistic (9).jpg,,0.0,,0.0
+images\female face(20).jpg,Alignment Problem,1.0,1.33,0.75
+images\realistic face (29).jpg,,0.0,,0.0
+images\old lady face (3).jpg,,0.0,,0.0
+images\realistic face (48).jpg,Unrealistic,0.67,3.0,1.0
+images\face of a smiling girl with red hair(1).jpg,Unrealistic,1.0,3.0,0.5
+images\ugly male face(2).jpg,Unrealistic,0.67,3.0,1.0
+images\child face (1).jpg,Number of Features,0.67,1.5,0.75
+images\old lady face (2).jpg,No Errors,0.67,0.0,1.0
+images\school boy face (1).jpg,Unrealistic,1.0,3.0,0.5
+images\face of a girl with piercings.jpg,Unrealistic,0.67,2.5,0.75
+images\nf_1.jpg,Unrealistic,0.67,3.5,0.75
+images\realistic face (18).jpg,Unrealistic,0.67,2.0,0.5
+images\realistic face (44).jpg,No Errors,0.67,0.0,1.0
+images\face of a smiling woman.jpg,Unrealistic,1.0,3.33,0.75
+images\face of a smiling boy.jpg,Unrealistic,0.67,4.0,1.0
+images\face of a boy with glasses(3).jpg,Unrealistic,0.67,3.5,0.75
+images\face of a woman with black hair(3).jpg,Unrealistic,0.67,1.5,0.75
+images\natural face (1).jpg,Unrealistic,0.67,3.0,0.5
+images\realistic (4).jpg,Unrealistic,1.0,4.0,1.0
+images\face of a smiling darkskinned woman(2).jpg,No Errors,0.67,0.0,1.0
+images\realistic face (15).jpg,No Errors,0.67,0.0,1.0
+images\child face(1).jpg,Alignment Problem,0.67,0.5,0.75
+images\face of a girl with piercings3.jpg,Alignment Problem,0.67,1.0,0.5
+images\nf_3.jpg,,0.0,,0.0
+images\realistic (11).jpg,No Errors,0.67,0.0,1.0
+images\school girl face.jpg,Alignment Problem,0.67,1.5,0.75
+images\female face(27).jpg,Unrealistic,1.0,2.67,0.75
+images\female face(16).jpg,Unrealistic,0.67,2.0,1.0
+images\a realistic face.jpg,Number of Features,0.67,2.0,1.0
